@@ -3,6 +3,10 @@ const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
+axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.withCredentials = true;
+
+
 router.post("/", async (req, res) => {
   const { name, email, password } = req.body;
   try {
