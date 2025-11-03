@@ -27,7 +27,7 @@ const Services = () => {
 
   const handleuserdata = (item) => {
     setData(item);
-    navigate("/services");
+    navigate("/bookservice");
   };
 
   return (

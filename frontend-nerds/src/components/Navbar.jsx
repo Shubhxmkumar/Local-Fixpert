@@ -40,7 +40,7 @@ const Navbar = () => {
             </li>
             <li>
               <NavLink
-                to="/services"
+                to="/bookservice"
                 className={({ isActive }) =>
                   `cursor-pointer hover:text-blue-600 transition ${
                     isActive ? "text-blue-600 font-semibold" : ""
