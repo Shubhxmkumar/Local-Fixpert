@@ -24,37 +24,47 @@ export default function RegisterPage() {
   }
 
   return (
-    <div className="mt-4 grow flex items-center justify-around">
-      <div className="mb-30">
-        <h1 className="text-4xl text-center mb-4">Register</h1>
-        <form className="max-w-md mx-auto" onSubmit={registerUser}>
+    <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-blue-100 px-6 py-10">
+      <div className="w-full max-w-md bg-white shadow-xl rounded-3xl p-8 sm:p-10">
+        <h1 className="text-3xl sm:text-4xl font-bold text-center text-gray-800 mb-6">
+          Register
+        </h1>
+
+        <form className="space-y-4" onSubmit={registerUser}>
           <input
-            className="border-2 rounded-2xl py-1 px-2 w-full mb-2"
+            className="border border-gray-300 rounded-xl py-2 px-3 w-full focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-700"
             type="text"
-            placeholder="Nitish Bharti"
+            placeholder="Full Name"
             value={name}
             onChange={(ev) => setName(ev.target.value)}
           />
+
           <input
-            className="border-2 rounded-2xl py-1 px-2 w-full mb-2"
+            className="border border-gray-300 rounded-xl py-2 px-3 w-full focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-700"
             type="email"
             placeholder="your@email.com"
             value={email}
             onChange={(ev) => setEmail(ev.target.value)}
           />
+
           <input
-            className="border-2 rounded-2xl py-1 px-2 w-full mb-2"
+            className="border border-gray-300 rounded-xl py-2 px-3 w-full focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-700"
             type="password"
-            placeholder="password"
+            placeholder="Password"
             value={password}
             onChange={(ev) => setPassword(ev.target.value)}
           />
-          <button className="bg-blue-500 w-full text-white p-2 rounded-2xl">
+
+          <button
+            className="bg-blue-500 hover:bg-blue-600 w-full text-white font-semibold py-2.5 rounded-xl transition-all duration-300 shadow-md"
+            type="submit"
+          >
             Register
           </button>
-          <div className="text-center py-2 text-gray-500">
+
+          <div className="text-center text-gray-600 text-sm mt-4">
             Already a member?{" "}
-            <Link className="underline text-black" to="/login">
+            <Link className="underline text-blue-600 font-medium" to="/login">
               Login
             </Link>
           </div>

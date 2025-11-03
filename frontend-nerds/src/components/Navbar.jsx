@@ -76,9 +76,11 @@ const Navbar = () => {
           </ul>
 
           <div className="flex gap-4">
+          <NavLink to='/signup'>
             <button className="py-2 px-5 border border-blue-500 text-blue-600 rounded-full font-semibold hover:bg-blue-50 transition">
               Sign Up
             </button>
+            </NavLink>
             <button className="py-2 px-5 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition">
               Become an Expert
             </button>
