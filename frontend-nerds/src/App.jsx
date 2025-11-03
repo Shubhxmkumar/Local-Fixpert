@@ -8,6 +8,7 @@ import Hero from './components/Hero'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import Footer from './components/Footer'
+import Service from './pages/Service'
 
 function App() {
  
@@ -18,6 +19,7 @@ function App() {
        <Navbar/>
        <Routes>
          <Route path='/' element={<Home/>}/>
+         <Route path='/services' element={<Service/>}/>
          {/* <Route path='/services' element={<Services/>}/> */}
          {/* <Route path='/contact' element={<Contact/>}/> */}
          {/* <Route path='/about' element={<About/>}/> */}
