@@ -8,8 +8,8 @@ const  Navbar = ()=> {
     <div className="brand h-full">
         <img className='h-[50px] logo' src={logo} alt=""  />
     </div>
-    <nav className="flex ">
-        <ul className="flex gap-10 items-center">
+    <nav className="flex poppins-regular">
+        <ul className="flex gap-10 items-center poppins-regular">
             <li className="py-2">Home</li>
             <li className="py-2">Service</li>
             <li className="py-2">About us</li>
