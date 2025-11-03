@@ -1,5 +1,6 @@
 import "./App.css";
 import axios from "axios";
+import Services from "./pages/Services";
 
 function App() {
   axios.defaults.baseURL = "http://localhost:3000";
@@ -7,7 +8,7 @@ function App() {
 
   return (
     <>
-      <div className="text-4xl bg-blue-800">Hello</div>
+      <Services />
     </>
   );
 }
