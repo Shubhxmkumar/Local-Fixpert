@@ -3,6 +3,9 @@ const router = express.Router();
 const Booking = require("../models/Booking");
 const jwt = require("jsonwebtoken");
 
+axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.withCredentials = true;
+
 app.post("/bookings", async (req, res) => {
   const userData = await getUserFromReq(req);
   const { place, checkIn, checkOut, numberOfGuests, name, mobile, price } =

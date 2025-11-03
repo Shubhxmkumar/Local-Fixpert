@@ -2,6 +2,10 @@ const express = require("express");
 const router = express.Router();
 const Service = require("../models/service");
 
+axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.withCredentials = true;
+
+
 // ✅ Create a new service
 router.post("/", async (req, res) => {
   try {

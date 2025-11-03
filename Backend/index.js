@@ -38,11 +38,11 @@ app.post("/logout", (req, res) => {
   res.cookie("token", "").json(true);
 });
 
-const servicesRoute = require("./routes/Services");
-app.use("/api/services", servicesRoute);
+// const servicesRoute = require("./routes/Services");
+// app.use("/api/services", servicesRoute);
 
-const bookingRoutes = require("./routes/Booking");
-app.use("/bookings", bookingRoutes);
+// const bookingRoutes = require("./routes/Booking");
+// app.use("/bookings", bookingRoutes);
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");

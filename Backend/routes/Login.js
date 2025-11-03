@@ -6,6 +6,11 @@ const jwt = require("jsonwebtoken");
 
 const jwtSecret = "ggfkshfgksh"; // you can move this to .env later
 
+
+axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.withCredentials = true;
+
+
 // ✅ LOGIN ROUTE
 router.post("/", async (req, res) => {
   const { email, password } = req.body;
