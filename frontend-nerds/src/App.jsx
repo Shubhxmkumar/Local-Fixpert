@@ -5,6 +5,8 @@ import './App.css'
 import Navbar from './components/Navbar'
 import About from './components/About'
 import Hero from './components/Hero'
+import { BrowserRouter, Route, Routes } from 'react-router-dom'
+import Home from './pages/Home'
 import Footer from './components/Footer'
 
 function App() {
@@ -12,10 +14,16 @@ function App() {
 
   return (
     <>
+    <BrowserRouter>
        <Navbar/>
-      <Hero/>
-       <About/>
+       <Routes>
+         <Route path='/' element={<Home/>}/>
+         {/* <Route path='/services' element={<Services/>}/> */}
+         {/* <Route path='/contact' element={<Contact/>}/> */}
+         {/* <Route path='/about' element={<About/>}/> */}
+       </Routes>
       <Footer />
+      </BrowserRouter>
     </>
   )
 }
