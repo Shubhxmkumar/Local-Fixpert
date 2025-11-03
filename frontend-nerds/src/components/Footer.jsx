@@ -10,7 +10,7 @@ const Footer = () => {
         {/* Left Section */}
         <div className="flex flex-col gap-6">
           <div className="flex items-center gap-2">
-            <img src={logo} alt="logo" className="" />
+            <img src={logo} alt="logo" className="h-15 w-auto" />
           </div>
 
           <p className="text-sm text-gray-300">

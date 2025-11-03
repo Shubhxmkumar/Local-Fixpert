@@ -7,7 +7,7 @@ import About from './components/About'
 import Hero from './components/Hero'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
-import Footer from './components/Footer'
+import BookService from './pages/BookService'
 
 function App() {
  
@@ -15,15 +15,15 @@ function App() {
   return (
     <>
     <BrowserRouter>
-       <Navbar/>
        <Routes>
          <Route path='/' element={<Home/>}/>
          {/* <Route path='/services' element={<Services/>}/> */}
          {/* <Route path='/contact' element={<Contact/>}/> */}
          {/* <Route path='/about' element={<About/>}/> */}
+         <Route path='/bookservice' element={<BookService/>}/>
        </Routes>
-      <Footer />
       </BrowserRouter>
+      
     </>
   )
 }
