@@ -1,7 +1,8 @@
 import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import heroimg from "../assets/home-page/LoginWorker.png";
-import api from "../api/axios";
+import axios from "axios";
+
 
 export default function RegisterPage() {
   const [name, setName] = useState("");
@@ -12,7 +13,7 @@ export default function RegisterPage() {
   async function registerUser(ev) {
     ev.preventDefault();
     try {
-      await api.post("/register", { name, email, password }); // ✅ fixed
+      await axios.post("/register", { name, email, password }); // ✅ fixed
       alert("🎉 Registration successful!");
       setRedirect(true);
     } catch (e) {

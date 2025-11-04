@@ -6,6 +6,11 @@ import RegisterPage from "./components/RegisterPage";
 import LoginPage from "./components/LoginPage";
 import ExpertPage from "./pages/ExpertPage";
 import Profile from "./pages/Profile";
+import axios from "axios";
+
+axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.withCredentials = true;
+
 function App() {
   return (
     <>

@@ -28,9 +28,9 @@ const About = () => {
           safely, quickly, and transparently.
         </p>
 
-        <button className="mt-2 px-6 sm:px-7 py-2.5 sm:py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition-all">
+        {/* <button className="mt-2 px-6 sm:px-7 py-2.5 sm:py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition-all">
           Learn More
-        </button>
+        </button> */}
       </div>
     </section>
   );

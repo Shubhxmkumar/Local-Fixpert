@@ -10,11 +10,9 @@ const Nav = ({ step }) => {
     <header className="w-full fixed top-0 left-0 z-50 bg-white shadow-md">
       <div className="flex flex-col sm:flex-row w-full justify-between sm:justify-evenly items-center py-4 px-4 gap-3">
         {/* Logo Section */}
-        <Link to={"/"}>
-          <div className="flex items-center gap-3">
-            <img src={logo} alt="Logo" className="h-10 sm:h-[50px]" />
-          </div>
-        </Link>
+        <div className="flex items-center gap-3">
+          <img src={logo} alt="Logo" className="h-10 sm:h-[50px]" />
+        </div>
         {/* Steps Section */}
         <div className="flex gap-2 sm:gap-4 bg-gray-200 w-full sm:w-[50%] rounded-full justify-between px-2 py-1">
           <button

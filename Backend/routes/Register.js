@@ -2,9 +2,10 @@ const express = require("express");
 const router = express.Router();
 const User = require("../models/User");
 const bcrypt = require("bcrypt");
+require("dotenv").config();
 
 const bcryptSalt = bcrypt.genSaltSync(10);
-const jwtSecret = "ggfkshfgksh";
+const jwtSecret = process.env.JWT_SECRET;
 
 router.post("/", async (req, res) => {
   const { name, email, password } = req.body;

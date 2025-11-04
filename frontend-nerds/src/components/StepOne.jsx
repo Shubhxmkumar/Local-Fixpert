@@ -6,7 +6,7 @@ import Nav from "./Nav";
 
 /* --------------------------- STEP FORM COMPONENT --------------------------- */
 const StepForm = ({ step, title, description, onNext }) => {
-  const { data } = useData(); // ✅ Access global data
+  const { data, setlocationforfilter, setserviceprovide } = useData(); // ✅ Access global data
   const [location, setLocation] = useState("");
   const [service, setService] = useState(data?.title || "");
 
@@ -26,6 +26,8 @@ const StepForm = ({ step, title, description, onNext }) => {
       return;
     }
     onNext({ location, service });
+    setlocationforfilter(location);
+    setserviceprovide(service);
   };
 
   return (

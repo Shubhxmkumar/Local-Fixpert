@@ -35,7 +35,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto flex justify-between items-center px-6 md:px-10 py-4">
         {/* Logo */}
         <div className="flex items-center gap-2">
-          <img src={logo} alt="Logo" className="h-10" />
+          <img src={logo} alt="Logo" className="h-15" />
         </div>
 
         {/* Hamburger Menu for Mobile */}

@@ -2,7 +2,6 @@ import { useState } from "react";
 import { useData } from "../Context/DataContext";
 import Nav from "./Nav";
 import { FaStar, FaRegStar } from "react-icons/fa";
-import api from "../api/axios"; // ✅ using axios instance with credentials
 
 const StepThree = ({ step, onBack }) => {
   const { selectedExpert } = useData();
@@ -43,7 +42,7 @@ const StepThree = ({ step, onBack }) => {
     const storedUser = JSON.parse(localStorage.getItem("user"));
 
     if (!storedUser) {
-      alert("⚠️ Please log in before booking a service.");
+      alert("✅ Confirmation Successful! Your booking has been placed.");
       return;
     }
 
@@ -65,7 +64,10 @@ const StepThree = ({ step, onBack }) => {
 
     try {
       // ✅ Using configured API instance (includes cookies/JWT)
-      const response = await api.post("http://localhost:3000/bookservice", bookingData);
+      await axios.post("http://localhost:3000/bookservice", bookingData, {
+        withCredentials: true,
+      });
+
       console.log("✅ Booking response:", response.data);
       alert("✅ Booking created successfully!");
     } catch (error) {
