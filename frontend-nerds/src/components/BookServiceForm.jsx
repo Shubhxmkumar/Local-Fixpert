@@ -5,10 +5,10 @@ import StepThree from "./StepThree";
 
 const BookServiceForm = () => {
   const [step, setStep] = useState(1);
-  const [form, setForm] = useState({}); // stores all collected data
+  const [form, setForm] = useState({});
 
   const handleNext = (data) => {
-    setForm((prev) => ({ ...prev, ...data })); // merge new data
+    setForm((prev) => ({ ...prev, ...data }));
     setStep(step + 1);
   };
 
@@ -25,13 +25,7 @@ const BookServiceForm = () => {
           onBack={handleBack}
         />
       )}
-      {step === 3 && (
-        <StepThree
-          step={step}
-          form={form} // ✅ Pass collected form data
-          onBack={handleBack}
-        />
-      )}
+      {step === 3 && <StepThree step={step} onBack={handleBack} />}
     </>
   );
 };

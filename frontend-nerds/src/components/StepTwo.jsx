@@ -204,7 +204,7 @@ const StepTwo = ({ onNext, step, onBack }) => {
         {/* 🔙 Back Button */}
         <button
           onClick={onBack}
-          className="mt-10 text-blue-600 underline block mx-auto hover:text-blue-800 transition"
+          className="mt-10 px-5 py-2 rounded-full bg-gradient-to-r from-blue-500 to-indigo-600 text-white font-medium shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all duration-300 mx-auto block"
         >
           ← Back
         </button>

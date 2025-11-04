@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { IoChevronForward } from "react-icons/io5";
+import logo from "../assets/logo.png";
 import { useData } from "../Context/DataContext";
 import Nav from "./Nav";
 
@@ -29,12 +30,6 @@ const StepForm = ({ step, title, description, onNext }) => {
 
   return (
     <>
-<<<<<<< HEAD
-    <Nav/>
-    <div className="min-h-screen bg-[#F6FAFF] flex flex-col items-center pt-10 mt-10">
-      {/* Steps Navigation */}
-      <p className="text-sm text-gray-600 mb-6">Describe the task</p>
-=======
       {/* Navbar */}
       <Nav step={step} />
 
@@ -67,7 +62,6 @@ const StepForm = ({ step, title, description, onNext }) => {
               className="w-full rounded-full border border-gray-200 px-4 sm:px-5 py-2.5 sm:py-3 outline-none focus:border-blue-500 text-sm sm:text-base"
             />
           </div>
->>>>>>> 0d2e530 (fully backed and some frontend file uploaded)
 
           {/* Service Select */}
           <div className="mb-8">

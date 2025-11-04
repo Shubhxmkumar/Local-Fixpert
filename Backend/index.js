@@ -44,6 +44,19 @@ app.use("/expert", expertRoutes);
 const bookingRoutes = require("./routes/Booking");
 app.use("/bookservice", bookingRoutes);
 
+app.get("/profile", (req, res) => {
+  const { token } = req.cookies;
+  if (token) {
+    jwt.verify(token, jwtSecret, {}, async (err, userData) => {
+      if (err) throw err;
+      const { name, email, _id } = await User.findById(userData.id);
+      res.json({ name, email, _id });
+    });
+  } else {
+    res.json(null);
+  }
+});
+
 app.listen(3000, () => {
   console.log("Server running on port 3000");
 });
