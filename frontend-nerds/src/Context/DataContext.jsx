@@ -1,17 +1,20 @@
-import React, { createContext, useContext, useState } from "react";
+/* eslint-disable react-refresh/only-export-components */
+import { createContext, useContext, useState } from "react";
 
-// 1️⃣ Create Context
 const DataContext = createContext();
 
-// 2️⃣ Create Provider
 export const DataProvider = ({ children }) => {
-  const [data, setData] = useState(); // shared state
+  const [data, setData] = useState(null);
+  const [selectedExpert, setSelectedExpert] = useState(null);
+    const [user, setUser] = useState(null);
+
   return (
-    <DataContext.Provider value={{ data, setData }}>
+    <DataContext.Provider
+      value={{ data, setData, selectedExpert, setSelectedExpert, user, setUser }}
+    >
       {children}
     </DataContext.Provider>
   );
 };
 
-// 3️⃣ Create custom hook for easy usage
 export const useData = () => useContext(DataContext);

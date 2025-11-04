@@ -1,216 +1,139 @@
 import { useState } from "react";
 import { IoChevronForward } from "react-icons/io5";
-import logo from "../assets/logo.png";
+import { useData } from "../Context/DataContext";
+import Nav from "./Nav";
 
-const StepOne = ({ onNext }) => {
+/* --------------------------- STEP FORM COMPONENT --------------------------- */
+const StepForm = ({ step, title, description, onNext }) => {
+  const { data } = useData(); // ✅ Access global data
   const [location, setLocation] = useState("");
-  const [service, setService] = useState("");
+  const [service, setService] = useState(data?.title || "");
+
+  const services = [
+    "Plumbing",
+    "Electrician",
+    "House Cleaning",
+    "AC Servicing",
+    "Carpenter",
+    "Mover",
+    "Wall Painter",
+  ];
+
+  const handleNext = () => {
+    if (!location.trim() || !service) {
+      alert("Please fill in all fields before continuing.");
+      return;
+    }
+    onNext({ location, service });
+  };
 
   return (
     <>
+<<<<<<< HEAD
     <Nav/>
     <div className="min-h-screen bg-[#F6FAFF] flex flex-col items-center pt-10 mt-10">
       {/* Steps Navigation */}
       <p className="text-sm text-gray-600 mb-6">Describe the task</p>
+=======
+      {/* Navbar */}
+      <Nav step={step} />
 
-      {/* Title */}
-      <h2 className="text-xl font-semibold text-gray-800 mb-10">
-        STEP 1 — Describe your task
-      </h2>
+      {/* Page Layout */}
+      <main className="min-h-screen bg-[#F6FAFF] flex flex-col items-center pt-36 sm:pt-32 px-4 sm:px-6">
+        {/* Step Header */}
+        <header className="text-center mb-8">
+          <p className="text-sm text-gray-600 mb-2">{description}</p>
+          <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800">
+            {title}
+          </h2>
+        </header>
 
-      {/* Form Container */}
-      <div className="w-full max-w-xl bg-white border border-blue-400 rounded-2xl p-8 shadow-sm">
-        {/* Location */}
-        <div className="mb-6">
-          <label className="font-semibold text-gray-700 block mb-2">
-            Enter your location
-          </label>
-          <input
-            type="text"
-            placeholder="Eg. village Bagrian, Attari, asr"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            className="w-full rounded-full border border-gray-200 px-5 py-3 outline-none focus:border-blue-500"
-          />
-        </div>
+        {/* Form Card */}
+        <section className="w-full max-w-md sm:max-w-xl bg-white border border-blue-400 rounded-2xl p-6 sm:p-8 shadow-sm">
+          {/* Location Input */}
+          <div className="mb-6">
+            <label
+              htmlFor="location"
+              className="font-semibold text-gray-700 block mb-2 text-sm sm:text-base"
+            >
+              Enter your location
+            </label>
+            <input
+              id="location"
+              type="text"
+              placeholder="Eg. village Bagrian, Attari, asr"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              className="w-full rounded-full border border-gray-200 px-4 sm:px-5 py-2.5 sm:py-3 outline-none focus:border-blue-500 text-sm sm:text-base"
+            />
+          </div>
+>>>>>>> 0d2e530 (fully backed and some frontend file uploaded)
 
-        {/* Service */}
-        <div className="mb-10">
-          <label className="font-semibold text-gray-700 block mb-2">
-            Selected service
-          </label>
-          <select
-            value={service}
-            onChange={(e) => setService(e.target.value)}
-            className="w-full rounded-full border border-gray-200 px-5 py-3 outline-none focus:border-blue-500"
-          >
-            <option>Eg. Plumber</option>
-            <option>Electrician</option>
-            <option>Cleaner</option>
-            <option>Painter</option>
-          </select>
-        </div>
+          {/* Service Select */}
+          <div className="mb-8">
+            <label
+              htmlFor="service"
+              className="font-semibold text-gray-700 block mb-2 text-sm sm:text-base"
+            >
+              Select a service
+            </label>
+            <select
+              id="service"
+              value={service}
+              onChange={(e) => setService(e.target.value)}
+              className="w-full rounded-full border border-gray-200 px-4 sm:px-5 py-2.5 sm:py-3 outline-none focus:border-blue-500 text-sm sm:text-base"
+            >
+              <option value="">Choose a service</option>
+              {services.map((item) => (
+                <option key={item} value={item}>
+                  {item}
+                </option>
+              ))}
+            </select>
+          </div>
 
-        {/* Next Button */}
-        <button
-          onClick={() => onNext({ location, service })}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 rounded-full mx-auto transition"
-        >
-          Next <IoChevronForward size={18} />
-        </button>
-      </div>
-    </div>
+          {/* Next Button */}
+          <div className="flex justify-center">
+            <button
+              onClick={handleNext}
+              className="flex items-center gap-2 justify-center text-sm sm:text-base px-6 sm:px-8 py-2.5 rounded-full bg-blue-600 hover:bg-blue-700 text-white transition-all shadow-md"
+            >
+              Next <IoChevronForward size={18} />
+            </button>
+          </div>
+        </section>
+      </main>
     </>
   );
 };
-const StepTwo = ({ onNext }) => {
-  const [location, setLocation] = useState("");
-  const [service, setService] = useState("");
 
-  return (
-    <>
-    <Nav/>
-    <div className="min-h-screen bg-[#F6FAFF] flex flex-col items-center pt-10">
-      {/* Steps Navigation */}
+/* --------------------------- INDIVIDUAL STEPS --------------------------- */
+export const StepOne = ({ onNext }) => (
+  <StepForm
+    step={1}
+    title="Describe your task"
+    description="Please tell us what kind of help you need"
+    onNext={onNext}
+  />
+);
 
-    
+export const StepTwo = ({ onNext }) => (
+  <StepForm
+    step={2}
+    title="Confirm your details"
+    description="Review your task information before continuing"
+    onNext={onNext}
+  />
+);
 
-      <p className="text-sm text-gray-600 mb-6">Describe the task</p>
+export const StepThree = ({ onNext }) => (
+  <StepForm
+    step={3}
+    title="Finalize your request"
+    description="Almost done! Please confirm and submit your request."
+    onNext={onNext}
+  />
+);
 
-      {/* Title */}
-      <h2 className="text-xl font-semibold text-gray-800 mb-10">
-        STEP 1 — Describe your task
-      </h2>
-
-      {/* Form Container */}
-      <div className="w-full max-w-xl bg-white border border-blue-400 rounded-2xl p-8 shadow-sm">
-        {/* Location */}
-        <div className="mb-6">
-          <label className="font-semibold text-gray-700 block mb-2">
-            Enter your location
-          </label>
-          <input
-            type="text"
-            placeholder="Eg. village Bagrian, Attari, asr"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            className="w-full rounded-full border border-gray-200 px-5 py-3 outline-none focus:border-blue-500"
-          />
-        </div>
-
-        {/* Service */}
-        <div className="mb-10">
-          <label className="font-semibold text-gray-700 block mb-2">
-            Selected service
-          </label>
-          <select
-            value={service}
-            onChange={(e) => setService(e.target.value)}
-            className="w-full rounded-full border border-gray-200 px-5 py-3 outline-none focus:border-blue-500"
-          >
-            <option>Eg. Plumber</option>
-            <option>Electrician</option>
-            <option>Cleaner</option>
-            <option>Painter</option>
-          </select>
-        </div>
-
-        {/* Next Button */}
-        <button
-          onClick={() => onNext({ location, service })}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 rounded-full mx-auto transition"
-        >
-          Next <IoChevronForward size={18} />
-        </button>
-      </div>
-    </div>
-    </>
-  );
-};
-const StepThree= ({ onNext }) => {
-  const [location, setLocation] = useState("");
-  const [service, setService] = useState("");
-
-  return (
-    <>
-    <Nav/>
-    <div className="min-h-screen bg-[#F6FAFF] flex flex-col items-center pt-10">
-      {/* Steps Navigation */}
-
-    
-
-      <p className="text-sm text-gray-600 mb-6">Describe the task</p>
-
-      {/* Title */}
-      <h2 className="text-xl font-semibold text-gray-800 mb-10">
-        STEP 1 — Describe your task
-      </h2>
-
-      {/* Form Container */}
-      <div className="w-full max-w-xl bg-white border border-blue-400 rounded-2xl p-8 shadow-sm">
-        {/* Location */}
-        <div className="mb-6">
-          <label className="font-semibold text-gray-700 block mb-2">
-            Enter your location
-          </label>
-          <input
-            type="text"
-            placeholder="Eg. village Bagrian, Attari, asr"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-            className="w-full rounded-full border border-gray-200 px-5 py-3 outline-none focus:border-blue-500"
-          />
-        </div>
-
-        {/* Service */}
-        <div className="mb-10">
-          <label className="font-semibold text-gray-700 block mb-2">
-            Selected service
-          </label>
-          <select
-            value={service}
-            onChange={(e) => setService(e.target.value)}
-            className="w-full rounded-full border border-gray-200 px-5 py-3 outline-none focus:border-blue-500"
-          >
-            <option>Eg. Plumber</option>
-            <option>Electrician</option>
-            <option>Cleaner</option>
-            <option>Painter</option>
-          </select>
-        </div>
-
-        {/* Next Button */}
-        <button
-          onClick={() => onNext({ location, service })}
-          className="flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-8 py-2 rounded-full mx-auto transition"
-        >
-          Next <IoChevronForward size={18} />
-        </button>
-      </div>
-    </div>
-    </>
-  );
-};
-const Nav = ()=>{
-  return (
-    <header className="w-full shadow-sm bg-white fixed top-0 left-0 z-50">
-      <div className="flex w-full justify-evenly items-center ">
-        <div className="flex items-center gap-3">
-                  <img src={logo} alt="Logo" className="h-[50px]" />
-                </div>
-         <div className="flex gap-4 items-center my-auto bg-gray-200 w-[50%] rounded-full justify-between">
-        <button className="px-6 py-2 bg-blue-600 text-white rounded-full text-sm font-medium">
-          Step 1
-        </button>
-        <button className="px-6 py-2 bg-gray-300 text-gray-700 rounded-full text-sm font-medium">
-          Step 2
-        </button>
-        <button className="px-6 py-2 bg-gray-300 text-gray-700 rounded-full text-sm font-medium">
-          Step 3
-        </button>
-      </div>
-      </div>
-      </header>
-  )
-}
+/* --------------------------- DEFAULT EXPORT --------------------------- */
 export default StepOne;

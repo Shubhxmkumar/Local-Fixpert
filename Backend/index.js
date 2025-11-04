@@ -22,7 +22,7 @@ mongoose
   .catch((err) => console.error("❌ MongoDB connection error:", err));
 
 const bcryptSalt = bcrypt.genSaltSync(10);
-const jwtSecret = "ggfkshfgksh";
+const jwtSecret = process.env.JWT_SECRET;
 
 app.get("/", (req, res) => {
   res.json("HI");
@@ -38,11 +38,11 @@ app.post("/logout", (req, res) => {
   res.cookie("token", "").json(true);
 });
 
-// const servicesRoute = require("./routes/Services");
-// app.use("/api/services", servicesRoute);
+const expertRoutes = require("./routes/Expert");
+app.use("/expert", expertRoutes);
 
-// const bookingRoutes = require("./routes/Booking");
-// app.use("/bookings", bookingRoutes);
+const bookingRoutes = require("./routes/Booking");
+app.use("/bookservice", bookingRoutes);
 
 app.listen(3000, () => {
   console.log("Server running on port 3000");
