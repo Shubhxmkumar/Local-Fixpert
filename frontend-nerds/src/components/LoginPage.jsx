@@ -92,7 +92,6 @@ export default function LoginPage() {
   if (redirect) return <Navigate to="/" />;
 
   return (
-<<<<<<< HEAD
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-50 to-blue-100 px-6 py-10">
       <div className="w-full max-w-md bg-white shadow-xl rounded-3xl p-8 sm:p-10">
         <h1 className="text-3xl sm:text-4xl font-bold text-center text-gray-800 mb-6">
@@ -120,88 +119,14 @@ export default function LoginPage() {
 
           <button
             className="bg-blue-500 hover:bg-blue-600 w-full text-white font-semibold py-2.5 rounded-xl transition-all duration-300 shadow-md"
-=======
-    <div className="min-h-screen flex flex-col md:flex-row items-center justify-center bg-gradient-to-r from-blue-100 via-blue-50 to-blue-100 px-6 py-10">
-      {/* Left Section — Illustration + Text */}
-      <div className="hidden md:flex flex-col items-center justify-center w-1/2 text-center animate-fadeIn space-y-6">
-        <img
-          src={heroimg}
-          alt="Login Illustration"
-          className="w-96 drop-shadow-xl animate-float"
-        />
-        <h2 className="text-3xl font-bold text-gray-800">Welcome Back 👋</h2>
-        <p className="text-gray-600 w-2/3">
-          Log in to continue connecting with trusted local experts near you.
-        </p>
-      </div>
-
-      {/* Right Section — Login Form */}
-      <div className="w-full md:w-1/2 max-w-md bg-white/70 backdrop-blur-xl shadow-2xl rounded-3xl p-8 sm:p-10 border border-blue-100 animate-slideUp">
-        <h1 className="text-3xl sm:text-4xl font-bold text-center text-blue-700 mb-6">
-          Login to Your Account
-        </h1>
-
-        <form className="space-y-5" onSubmit={handleLogin}>
-          {/* Email Field */}
-          <div>
-            <label className="block text-gray-700 text-sm font-semibold mb-1">
-              Email
-            </label>
-            <input
-              className="border border-gray-300 rounded-xl py-2 px-3 w-full focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-700"
-              type="email"
-              placeholder="your@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
-          </div>
-
-          {/* Password Field */}
-          <div>
-            <label className="block text-gray-700 text-sm font-semibold mb-1">
-              Password
-            </label>
-            <input
-              className="border border-gray-300 rounded-xl py-2 px-3 w-full focus:ring-2 focus:ring-blue-400 focus:outline-none text-gray-700"
-              type="password"
-              placeholder=""
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              required
-            />
-          </div>
-
-          {/* Remember me */}
-          <div className="flex items-center justify-between">
-            <label className="flex items-center text-sm text-gray-600">
-              <input type="checkbox" className="mr-2 accent-blue-600" />
-              Remember me
-            </label>
-          </div>
-
-          {/* Login Button */}
-          <button
-            className="bg-blue-600 hover:bg-blue-700 w-full text-white font-semibold py-2.5 rounded-xl transition-all duration-300 shadow-md hover:scale-[1.02]"
->>>>>>> 0d2e530 (fully backed and some frontend file uploaded)
             type="submit"
           >
             Login
           </button>
 
-<<<<<<< HEAD
           <div className="text-center text-gray-600 text-sm mt-4">
             Don’t have an account?{" "}
             <Link className="underline text-blue-600 font-medium" to="/signup">
-=======
-          {/* Redirect to Register */}
-          <div className="text-center text-gray-600 text-sm mt-4">
-            Don’t have an account?{" "}
-            <Link
-              className="underline text-blue-600 font-medium hover:text-blue-800"
-              to="/signup"
-            >
->>>>>>> 0d2e530 (fully backed and some frontend file uploaded)
               Register
             </Link>
           </div>
