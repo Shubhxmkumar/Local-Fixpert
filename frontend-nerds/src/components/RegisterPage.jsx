@@ -13,7 +13,7 @@ export default function RegisterPage() {
   async function registerUser(ev) {
     ev.preventDefault();
     try {
-      await axios.post("/register", { name, email, password }); // ✅ fixed
+      await api.post("/register", { name, email, password });
       alert("🎉 Registration successful!");
       setRedirect(true);
     } catch (e) {
