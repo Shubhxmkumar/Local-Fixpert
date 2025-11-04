@@ -1,14 +1,15 @@
 import { useState } from "react";
 import { IoChevronForward } from "react-icons/io5";
+import logo from "../assets/logo.png";
 import { useData } from "../Context/DataContext";
 import Nav from "./Nav";
 
 /* --------------------------- STEP FORM COMPONENT --------------------------- */
 const StepForm = ({ step, title, description, onNext }) => {
-  const { data } = useData(); // ✅ Access global data
+  const { data,setlocationforfilter } = useData(); // ✅ Access global data
   const [location, setLocation] = useState("");
   const [service, setService] = useState(data?.title || "");
-
+   
   const services = [
     "Plumbing",
     "Electrician",
@@ -25,14 +26,43 @@ const StepForm = ({ step, title, description, onNext }) => {
       return;
     }
     onNext({ location, service });
+    setlocationforfilter(location);
   };
 
   return (
     <>
-    <Nav/>
-    <div className="min-h-screen bg-[#F6FAFF] flex flex-col items-center pt-10 mt-10">
-      {/* Steps Navigation */}
-      <p className="text-sm text-gray-600 mb-6">Describe the task</p>
+      {/* Navbar */}
+      <Nav step={step} />
+
+      {/* Page Layout */}
+      <main className="min-h-screen bg-[#F6FAFF] flex flex-col items-center pt-36 sm:pt-32 px-4 sm:px-6">
+        {/* Step Header */}
+        <header className="text-center mb-8">
+          <p className="text-sm text-gray-600 mb-2">{description}</p>
+          <h2 className="text-2xl sm:text-3xl font-semibold text-gray-800">
+            {title}
+          </h2>
+        </header>
+
+        {/* Form Card */}
+        <section className="w-full max-w-md sm:max-w-xl bg-white border border-blue-400 rounded-2xl p-6 sm:p-8 shadow-sm">
+          {/* Location Input */}
+          <div className="mb-6">
+            <label
+              htmlFor="location"
+              className="font-semibold text-gray-700 block mb-2 text-sm sm:text-base"
+            >
+              Enter your location
+            </label>
+            <input
+              id="location"
+              type="text"
+              placeholder="Eg. village Bagrian, Attari, asr"
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}
+              className="w-full rounded-full border border-gray-200 px-4 sm:px-5 py-2.5 sm:py-3 outline-none focus:border-blue-500 text-sm sm:text-base"
+            />
+          </div>
 
           {/* Service Select */}
           <div className="mb-8">
