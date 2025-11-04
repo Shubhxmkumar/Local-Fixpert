@@ -4,47 +4,38 @@ const User = require("../models/User");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-const jwtSecret = "ggfkshfgksh"; // you can move this to .env later
-
-
-axios.defaults.baseURL = "http://localhost:3000";
-axios.defaults.withCredentials = true;
-
-
-// ✅ LOGIN ROUTE
 router.post("/", async (req, res) => {
   const { email, password } = req.body;
+
   try {
-    // check if user exists
     const user = await User.findOne({ email });
-    if (!user) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
+    if (!user) return res.status(404).json({ message: "User not found" });
 
-    // verify password
-    const validPassword = await bcrypt.compare(password, user.password);
-    if (!validPassword) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
+    const valid = await bcrypt.compare(password, user.password);
+    if (!valid) return res.status(401).json({ message: "Invalid password" });
 
-    // create JWT token
-    const token = jwt.sign({ id: user._id, email: user.email }, jwtSecret, {
-      expiresIn: "1d",
-    });
+    // ✅ Create JWT
+    const token = jwt.sign(
+      { id: user._id, email: user.email },
+      process.env.JWT_SECRET || "ggfkshfgksh",
+      { expiresIn: "1d" }
+    );
 
-    // send token as cookie
-    res.cookie("token", token, {
-      httpOnly: true,
-      sameSite: "lax",
-    });
-
-    res.json({
-      message: "Login successful",
-      user: { id: user._id, email: user.email, name: user.name },
-    });
-  } catch (err) {
-    console.error(err);
-    res.status(500).json({ message: "Login failed" });
+    // ✅ Send JWT as cookie
+    res
+      .cookie("token", token, {
+        httpOnly: true,
+        sameSite: "lax",
+        secure: false, // change to true if using HTTPS
+      })
+      .status(200)
+      .json({
+        message: "Login successful",
+        user: { _id: user._id, name: user.name, email: user.email },
+      });
+  } catch (error) {
+    console.error("Login failed:", error.message);
+    res.status(500).json({ message: "Server error" });
   }
 });
 
