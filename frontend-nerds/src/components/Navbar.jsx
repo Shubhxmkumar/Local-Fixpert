@@ -39,7 +39,6 @@ const Navbar = () => {
               </NavLink>
             </li>
             <li>
-<<<<<<< HEAD
               <NavLink
                 to="/bookservice"
                 className={({ isActive }) =>
@@ -47,14 +46,6 @@ const Navbar = () => {
                     isActive ? "text-blue-600 font-semibold" : ""
                   }`
                 }
-=======
-              <Link
-                to="services" // Matches the id="about" in your section
-                smooth={true} // Enables smooth scrolling
-                duration={600} // Scroll duration (ms)
-                offset={-80} // Adjust for fixed navbar height
-                className="cursor-pointer hover:text-blue-600 transition"
->>>>>>> 0d2e530 (fully backed and some frontend file uploaded)
               >
                 Services
               </Link>
@@ -85,25 +76,12 @@ const Navbar = () => {
           </ul>
 
           <div className="flex gap-4">
-<<<<<<< HEAD
           <NavLink to='/signup'>
             <button className="py-2 px-5 border border-blue-500 text-blue-600 rounded-full font-semibold hover:bg-blue-50 transition">
               Sign Up
             </button>
             </NavLink>
             <button className="py-2 px-5 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition">
-=======
-            <NavLink to="/signup">
-              <button className="py-2 px-5 border border-blue-500 text-blue-600 rounded-full font-semibold hover:bg-blue-50 transition">
-                Sign Up
-              </button>
-            </NavLink>
-
-            <NavLink
-              to="/expert"
-              className="py-2 px-5 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition"
-            >
->>>>>>> 0d2e530 (fully backed and some frontend file uploaded)
               Become an Expert
             </NavLink>
           </div>
