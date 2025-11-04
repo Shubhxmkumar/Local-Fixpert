@@ -16,7 +16,7 @@ const experts = [
     phone: "9988776655",
     city: "Amritsar",
     clients: "80+",
-    rating: 5,
+    rating: 5, 
     img: "https://randomuser.me/api/portraits/men/55.jpg"
   }
 ];
