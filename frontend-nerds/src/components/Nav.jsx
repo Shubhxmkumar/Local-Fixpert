@@ -13,8 +13,11 @@ const Nav = ({ step }) => {
         <div className="flex items-center gap-3">
           <img src={logo} alt="Logo" className="h-10 sm:h-[50px]" />
         </div>
+<<<<<<< HEAD
 >>>>>>> 0d2e530 (fully backed and some frontend file uploaded)
 
+=======
+>>>>>>> c77ca2e (final commit)
         {/* Steps Section */}
         <div className="flex gap-2 sm:gap-4 bg-gray-200 w-full sm:w-[50%] rounded-full justify-between px-2 py-1">
           <button
