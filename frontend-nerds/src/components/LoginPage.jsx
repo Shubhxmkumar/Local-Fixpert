@@ -1,20 +1,23 @@
 import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
-import heroimg from "../assets/home-page/LoginWorker.png";
+import heroimg from "../assets/home-page/LoginWorker.png"; // ✅ Make sure this path is correct
+import { useData } from "../Context/DataContext";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
-
-  axios.defaults.withCredentials = true;
+const { setUser } = useData();
+  axios.defaults.withCredentials = true; // Optional: keep if using cookies/sessions
 
   async function handleLogin(ev) {
     ev.preventDefault();
     try {
       await axios.post("http://localhost:3000/login", { email, password });
-      alert("🎉 Login successful!");
+      setUser(email);
+      alert("Login successful! 🎉");
+
       setRedirect(true);
     } catch (e) {
       if (e.response?.status === 401) {
@@ -29,7 +32,7 @@ export default function LoginPage() {
 
   return (
     <div className="min-h-screen flex flex-col md:flex-row items-center justify-center bg-gradient-to-r from-blue-100 via-blue-50 to-blue-100 px-6 py-10">
-      {/* Left Section — Illustration + Text */}
+      {/* ---------------- Left Section ---------------- */}
       <div className="hidden md:flex flex-col items-center justify-center w-1/2 text-center animate-fadeIn space-y-6">
         <img
           src={heroimg}
@@ -42,14 +45,14 @@ export default function LoginPage() {
         </p>
       </div>
 
-      {/* Right Section — Login Form */}
+      {/* ---------------- Right Section (Login Form) ---------------- */}
       <div className="w-full md:w-1/2 max-w-md bg-white/70 backdrop-blur-xl shadow-2xl rounded-3xl p-8 sm:p-10 border border-blue-100 animate-slideUp">
         <h1 className="text-3xl sm:text-4xl font-bold text-center text-blue-700 mb-6">
           Login to Your Account
         </h1>
 
         <form className="space-y-5" onSubmit={handleLogin}>
-          {/* Email Field */}
+          {/* Email Input */}
           <div>
             <label className="block text-gray-700 text-sm font-semibold mb-1">
               Email
@@ -64,7 +67,7 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* Password Field */}
+          {/* Password Input */}
           <div>
             <label className="block text-gray-700 text-sm font-semibold mb-1">
               Password
@@ -79,7 +82,7 @@ export default function LoginPage() {
             />
           </div>
 
-          {/* Remember me */}
+          {/* Remember Me */}
           <div className="flex items-center justify-between">
             <label className="flex items-center text-sm text-gray-600">
               <input type="checkbox" className="mr-2 accent-blue-600" />
@@ -110,49 +113,3 @@ export default function LoginPage() {
     </div>
   );
 }
-
-/* -------------------- ANIMATIONS (Same as Register Page) -------------------- */
-/* Add these in your global CSS (index.css or tailwind.css) */
-<style jsx global>{`
-  @keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: translateY(15px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  @keyframes slideUp {
-    from {
-      opacity: 0;
-      transform: translateY(30px);
-    }
-    to {
-      opacity: 1;
-      transform: translateY(0);
-    }
-  }
-  @keyframes float {
-    0% {
-      transform: translateY(0);
-    }
-    50% {
-      transform: translateY(-10px);
-    }
-    100% {
-      transform: translateY(0);
-    }
-  }
-
-  .animate-fadeIn {
-    animation: fadeIn 1s ease-in-out forwards;
-  }
-  .animate-slideUp {
-    animation: slideUp 1.2s ease-in-out forwards;
-  }
-  .animate-float {
-    animation: float 4s ease-in-out infinite;
-  }
-`}</style>;

@@ -1,15 +1,17 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Link } from "react-scroll";
 import { NavLink } from "react-router-dom";
 import logo from "../assets/logo.png";
 import { GiHamburgerMenu } from "react-icons/gi";
 import { ImCross } from "react-icons/im";
 import { FaUserCircle } from "react-icons/fa";
+import { useData } from "../Context/DataContext";
 
 const Navbar = () => {
   const [menuOpen, setMenuOpen] = useState(false);
-  const [user, setUser] = useState(null);
+    const { user,setUser } = useData();
   const [dropdown, setDropdown] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(false)
 
   useEffect(() => {
     const storedUser = localStorage.getItem("user");
@@ -31,11 +33,11 @@ const Navbar = () => {
   ];
 
   return (
-    <header className="w-full shadow-sm bg-white fixed top-0 left-0 z-50">
-      <div className="container mx-auto flex justify-between items-center px-6 md:px-10 py-4">
-        {/* Brand / Logo */}
-        <div className="flex items-center gap-3">
-          <img src={logo} alt="Logo" className="h-[50px]" />
+    <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/30 border-b border-white/20 shadow-sm">
+      <div className="max-w-7xl mx-auto flex justify-between items-center px-6 md:px-10 py-4">
+        {/* Logo */}
+        <div className="flex items-center gap-2">
+          <img src={logo} alt="Logo" className="h-10" />
         </div>
 
         {/* Hamburger Menu for Mobile */}
@@ -79,6 +81,11 @@ const Navbar = () => {
                   Sign Up
                 </button>
               </NavLink>
+              <NavLink to="/login">
+                <button className="py-2 px-5 border border-blue-500 text-blue-600 rounded-full font-semibold hover:bg-blue-50 transition duration-300 backdrop-blur-sm">
+                  Login
+                </button>
+              </NavLink>
               <NavLink to="/expert">
                 <button className="py-2 px-5 bg-blue-600 text-white rounded-full font-semibold hover:bg-blue-700 transition duration-300 shadow-sm backdrop-blur-sm">
                   Become an Expert
@@ -98,7 +105,7 @@ const Navbar = () => {
               {/* Dropdown */}
               {dropdown && (
                 <div className="absolute right-0 mt-3 w-48 bg-white/80 backdrop-blur-lg shadow-lg rounded-xl border border-white/30 overflow-hidden z-50">
-                  <button
+                  {/* <button
                     className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50"
                     onClick={() => setDropdown(false)}
                   >
@@ -109,8 +116,9 @@ const Navbar = () => {
                     onClick={() => setDropdown(false)}
                   >
                     My Bookings
-                  </button>
-                  <hr />
+                  </button> 
+                  <hr />*/
+                  }
                   <button
                     className="block w-full text-left px-4 py-2 text-red-600 hover:bg-red-50"
                     onClick={handleLogout}

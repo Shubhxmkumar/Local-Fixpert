@@ -7,7 +7,7 @@ require("dotenv").config();
 const bcryptSalt = bcrypt.genSaltSync(10);
 const jwtSecret = process.env.JWT_SECRET;
 
-router.post("/", async (req, res) => {
+router.post("/reg-insert", async (req, res) => {
   const { name, email, password } = req.body;
   try {
     const existing = await User.findOne({ email });
