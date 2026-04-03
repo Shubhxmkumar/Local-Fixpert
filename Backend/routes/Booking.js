@@ -65,5 +65,61 @@ router.get("/mybookings/:userId", async (req, res) => {
     res.status(500).json({ message: "Failed to fetch bookings" });
   }
 });
+// cancel booking 
+router.put("/cancel/:id", async (req, res) => {
+  try {
+    const booking = await Booking.findByIdAndUpdate(
+      req.params.id,
+      { status: "cancelled" },
+      { new: true }
+    );
+
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    res.json({ success: true, booking });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+// rebook 
+router.post("/rebook/:id", async (req, res) => {
+  try {
+    const oldBooking = await Booking.findById(req.params.id);
+
+    if (!oldBooking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    const newBooking = await Booking.create({
+      ...oldBooking.toObject(),
+      _id: undefined,
+      status: "pending",
+      createdAt: undefined,
+      updatedAt: undefined,
+    });
+
+    res.json({ success: true, booking: newBooking });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
+router.put("/status/:id", async (req, res) => {
+  try {
+    const { status } = req.body;
+
+    const booking = await Booking.findByIdAndUpdate(
+      req.params.id,
+      { status },
+      { new: true }
+    );
+
+    res.json({ success: true, booking });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
 
 module.exports = router;

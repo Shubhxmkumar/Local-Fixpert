@@ -19,6 +19,11 @@ const bookingSchema = new mongoose.Schema(
     mobile: { type: String, required: true },
     payment: { type: String, required: true },
     time: { type: String },
+    status: {
+      type: String,
+      enum: ["pending", "confirmed", "completed", "cancelled"],
+      default: "pending",
+    },
   },
   { timestamps: true }
 );

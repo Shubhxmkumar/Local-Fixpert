@@ -1,7 +1,9 @@
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
+import { useNavigate } from "react-router-dom";
 
 const Nav = ({ step }) => {
+  const navigate = useNavigate();
   const active = "bg-blue-600 text-white";
   const inactive = "bg-gray-300 text-gray-700";
 
