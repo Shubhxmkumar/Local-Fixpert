@@ -49,11 +49,11 @@ const ExpertDashboard = () => {
       <h2 className="text-3xl font-bold mb-8 text-center text-blue-700">
         My Bookings
       </h2>
-      <Link to="/profile">
+      {/* <Link to="/profile">
       <h4 className="text-3xl font-bold mb-8 text-center text-blue-700">
         My Profile
       </h4>
-        </Link>
+        </Link> */}
 
 
       {bookings.length === 0 ? (
