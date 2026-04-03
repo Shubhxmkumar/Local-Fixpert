@@ -49,7 +49,7 @@ export default function MyBookings() {
       : bookings.filter((b) => b.serviceType === filter);
 
   return (
-    <div className="max-w-6xl mx-auto p-6">
+    <div className="max-w-6xl mx-auto mt-30 p-6">
       <h2 className="text-3xl font-bold mb-6 text-center">My Bookings</h2>
 
       {/* 🔽 FILTER */}
