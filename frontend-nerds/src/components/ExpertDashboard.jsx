@@ -45,9 +45,9 @@ setActiveJobs(res.data?.bookings || []);        console.log("Active Jobs:", res.
   };
 
   return (
-    <div className="bg-[#eef2f7] min-h-screen">
+    <div className="bg-[#eef2f7] min-h-screen ">
       {/* HERO */}
-      <div className="mt-10 px-6 md:px-12 py-10 flex flex-col md:flex-row items-center justify-between gap-8">
+      <div className="mt-10 mx-25 px-6 md:px-12 py-10 flex flex-col md:flex-row items-center justify-between gap-8">
         <div>
           <h2 className="text-3xl md:text-4xl font-bold">
             Welcome back, {user.name}
@@ -78,7 +78,7 @@ setActiveJobs(res.data?.bookings || []);        console.log("Active Jobs:", res.
       </div>
 
       {/* STATS */}
-      <div className="px-6 md:px-12 grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="px-6 mx-25 md:px-12 grid grid-cols-2 md:grid-cols-4 gap-4">
         <StatCard icon={<CheckCircle />} label="Job completed" value={stats?.completed ?? 0} onClick={() => navigate("/expertbookings?tab=Completed")} />
         <StatCard icon={<Clock />} label="Pending Requests" value={stats?.pending ?? 0} onClick={() => navigate("/expertbookings?tab=Pending")} />
         <StatCard icon={<Pencil />} label="Edit Profile" value="" onClick={() => navigate("/edit-profile/expert")} />
@@ -86,7 +86,7 @@ setActiveJobs(res.data?.bookings || []);        console.log("Active Jobs:", res.
       </div>
 
       {/* MAIN GRID */}
-      <div className="px-6 md:px-12 py-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="px-6 mx-25 md:px-12 py-8 grid grid-cols-1 lg:grid-cols-3 gap-6">
 
         {/* LEFT LARGE CARD */}
         <div className="lg:col-span-2 bg-white rounded-2xl shadow p-6 min-h-[300px]">

@@ -29,7 +29,7 @@ export default function Testimonials() {
         whileInView={{ opacity: 1 }}
         viewport={{ once: true }}
         transition={{ duration: 0.8 }}
-        className="text-center mb-16"
+        className="text-center mb-8"
       >
         <h2 className="text-4xl font-bold text-gray-900 mb-4">
           What Our Customers Say

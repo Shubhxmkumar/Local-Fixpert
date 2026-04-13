@@ -89,11 +89,11 @@ expertSchema.pre("save", async function (next) {
   if (!counter) {
     counter = await Counter.create({
       name: "expertID",
-      seq: 4570,
+      seq: 4590,
     });
   }
 
-  counter.seq += 1;
+  counter.seq += 2;
   await counter.save();
 
   this.expertID = `EXP${counter.seq}`;

@@ -5,7 +5,7 @@ import { NavLink } from "react-router-dom";
 import { Link } from "react-scroll";
 const Footer = () => {
   return (
-    <footer className="bg-[#121212] text-white py-14 px-6 md:px-20">
+    <footer className="bg-[#121212] text-white py-14 mt-15 px-6 md:px-20">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-12">
         {/* Left Section */}
         <div className="flex flex-col gap-6">
