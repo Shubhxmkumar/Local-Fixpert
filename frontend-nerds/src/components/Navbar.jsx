@@ -28,7 +28,7 @@ const Navbar = () => {
     localStorage.removeItem("user");
     setUser(null);
     navigate("/");
-    // setDropdown(false);
+    setDropdown(false);
   };
 
   const navLinks = [
