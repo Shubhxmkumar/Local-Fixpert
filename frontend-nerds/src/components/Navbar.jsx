@@ -30,12 +30,34 @@ const Navbar = () => {
     navigate("/");
     setDropdown(false);
   };
+  var navLinks;
+  if (user) {
+    if (user.isExpert) {
+      navLinks = [
+        { name: "Home", to: "/" }
 
-  const navLinks = [
-    { name: "Home", to: "/" },
-    { name: "Services", to: "/#services" },
-    { name: "About Us", to: "/#about" },
-  ];
+      ];
+    }
+    else {
+    navLinks = [
+      { name: "Home", to: "/" },
+      { name: "Services", to: "/#services" },
+      { name: "About Us", to: "/#about" },
+      { name: "Reviews", to: "/#reviews" },
+
+    ];
+  }
+  }
+
+  else {
+    navLinks = [
+      { name: "Home", to: "/" },
+      { name: "Services", to: "/#services" },
+      { name: "About Us", to: "/#about" },
+      { name: "Reviews", to: "/#reviews" },
+
+    ];
+  }
 
   return (
     <header className="fixed top-0 left-0 w-full z-50 backdrop-blur-md bg-white/30 border-b border-white/20 shadow-sm">
@@ -119,26 +141,26 @@ const Navbar = () => {
                   >
                     My Profile
                   </button>
-                  { user.isExpert ? (
-                     <button
-                    className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50"
-                    onClick={() => {
-                      setDropdown(false);
-                      navigate("/expertbookings");
-                    }}
-                  >
-                    Dashboard
-                  </button>
-                  ) 
-                  :(<button
-                    className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50"
-                    onClick={() => {
-                      setDropdown(false);
-                      navigate("/mybookings");
-                    }}
-                  >
-                    My Bookings
-                  </button>)
+                  {user.isExpert ? (
+                    <button
+                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50"
+                      onClick={() => {
+                        setDropdown(false);
+                        navigate("/expertbookings");
+                      }}
+                    >
+                      Dashboard
+                    </button>
+                  )
+                    : (<button
+                      className="block w-full text-left px-4 py-2 text-gray-700 hover:bg-blue-50"
+                      onClick={() => {
+                        setDropdown(false);
+                        navigate("/mybookings");
+                      }}
+                    >
+                      My Bookings
+                    </button>)
                   }
 
                   <hr />

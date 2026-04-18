@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import { useData } from "../Context/DataContext";
 import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import {
   FiPhone,
   FiMapPin,
@@ -18,6 +19,8 @@ export default function MyBookings() {
   const [ratingModal, setRatingModal] = useState(null);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
+  const navigate = useNavigate();
+
 
   const fetchBookings = async () => {
     if (!user?._id) return;
@@ -160,7 +163,7 @@ export default function MyBookings() {
               )}
 
               <button
-                onClick={() => rebook(booking._id)}
+               onClick={() => navigate(`/rebook/${booking._id}`)}
                 className="flex items-center gap-1 bg-blue-500 text-white px-3 py-1 rounded-full text-xs hover:bg-blue-600"
               >
                 <FiRefreshCw size={12} /> Rebook

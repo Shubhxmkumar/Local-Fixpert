@@ -85,25 +85,23 @@ router.put("/cancel/:id", async (req, res) => {
 });
 // rebook
 router.post("/rebook/:id", async (req, res) => {
-  try {
-    const oldBooking = await Booking.findById(req.params.id);
+  const oldBooking = await Booking.findById(req.params.id);
 
-    if (!oldBooking) {
-      return res.status(404).json({ message: "Booking not found" });
-    }
+  const newBooking = new Booking({
+    ...oldBooking.toObject(),
+    _id: undefined,
+    status: "pending",
+    date: req.body.date || oldBooking.date,
+    location: req.body.location || oldBooking.location,
+  });
 
-    const newBooking = await Booking.create({
-      ...oldBooking.toObject(),
-      _id: undefined,
-      status: "pending",
-      createdAt: undefined,
-      updatedAt: undefined,
-    });
+  await newBooking.save();
 
-    res.json({ success: true, booking: newBooking });
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+  res.json({ success: true, booking: newBooking });
+});
+router.get("/:id", async (req, res) => {
+  const booking = await Booking.findById(req.params.id).populate("expertId");
+  res.json({ booking });
 });
 
 router.put("/status/:id", async (req, res) => {
