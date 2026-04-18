@@ -148,7 +148,7 @@ Local-Fixperts/
   <h2>⚡ Installation</h2>
 
   <h3>Clone Repository</h3>
-  <code>git clone https://github.com/your-username/local-fixperts.git</code>
+  <code>git clone https://github.com/sandhuxvishav/Local-Fixpert</code>
 
   <h3>Install Dependencies</h3>
   <code>
@@ -157,13 +157,8 @@ cd frontend && npm install
   </code>
 
   <h3>Run Project</h3>
-  <code>
-      Backend :<br>
-
-node index.js 
-    <hr>
-    Frontend :<br> 
-npm run dev
+  <code>Backend :<br>node index.js 
+    <hr>Frontend :<br>npm run dev
   </code>
 </section>
 
