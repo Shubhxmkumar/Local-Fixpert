@@ -2,6 +2,12 @@ const express = require("express");
 const router = express.Router();
 const Booking = require("../models/Booking");
 const mongoose = require("mongoose");
+const Razorpay = require("razorpay");
+
+const razorpay = new Razorpay({
+  key_id: process.env.RAZORPAY_KEY_ID,
+  key_secret: process.env.RAZORPAY_KEY_SECRET,
+});
 
 /* -------------------------------------------------------------------------- */
 /*                         🔹 POST: Create New Booking                        */
@@ -85,23 +91,145 @@ router.put("/cancel/:id", async (req, res) => {
 });
 // rebook
 router.post("/rebook/:id", async (req, res) => {
-  const oldBooking = await Booking.findById(req.params.id);
+  try {
+    const oldBooking = await Booking.findById(req.params.id);
 
-  const newBooking = new Booking({
-    ...oldBooking.toObject(),
-    _id: undefined,
-    status: "pending",
-    date: req.body.date || oldBooking.date,
-    location: req.body.location || oldBooking.location,
-  });
+    if (!oldBooking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
 
-  await newBooking.save();
+    const newBooking = new Booking({
+      userId: oldBooking.userId,
+      expertId: oldBooking.expertId,
+      expertName: oldBooking.expertName,
+      serviceType: oldBooking.serviceType,
+      description: oldBooking.description,
+      mobile: oldBooking.mobile,
 
-  res.json({ success: true, booking: newBooking });
+      // 🔄 allow override
+      date: req.body.date || oldBooking.date,
+      location: req.body.location || oldBooking.location,
+      time: req.body.time || oldBooking.time,
+
+      // ✅ RESET FLOW
+      status: "pending",
+      quoteAmount: undefined,
+      quoteMessage: undefined,
+
+      // ❌ RESET PAYMENT
+      paymentStatus: "pending",
+      paymentId: undefined,
+      totalAmount: undefined,
+      expertEarning: undefined,
+
+      platformFee: 100,
+    });
+
+    await newBooking.save();
+
+    res.json({ success: true, booking: newBooking });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Rebook failed" });
+  }
 });
 router.get("/:id", async (req, res) => {
   const booking = await Booking.findById(req.params.id).populate("expertId");
   res.json({ booking });
+});
+
+
+router.post("/accept/:id", async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id);
+
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    const PLATFORM_FEE = 100;
+
+    if (!booking.quoteAmount || booking.quoteAmount <= PLATFORM_FEE) {
+      return res.status(400).json({
+        message: "Quote must be greater than ₹100",
+      });
+    }
+
+    booking.platformFee = PLATFORM_FEE;
+    booking.totalAmount = booking.quoteAmount;
+    booking.expertEarning = booking.quoteAmount - PLATFORM_FEE;
+
+    booking.status = "accepted";
+
+    await booking.save();
+
+    res.json({ booking });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
+  }
+});
+router.post("/verify-payment", async (req, res) => {
+  try {
+    const { bookingId, paymentId } = req.body;
+
+    const booking = await Booking.findById(bookingId);
+
+    if (!booking) {
+      return res.status(404).json({ message: "Booking not found" });
+    }
+
+    booking.paymentStatus = "paid";
+    booking.paymentId = paymentId;
+
+    await booking.save();
+
+    res.json({ success: true });
+  } catch (err) {
+    console.error("❌ Fake payment error:", err);
+    res.status(500).json({ message: "Payment failed" });
+  }
+});
+
+
+router.post("/create-order/:id", async (req, res) => {
+  try {
+    const booking = await Booking.findById(req.params.id);
+console.log("BOOKING:", booking);
+console.log("TOTAL:", booking.totalAmount);
+console.log("QUOTE:", booking.quoteAmount);
+    const options = {
+      amount: booking.totalAmount * 100, // paise
+      currency: "INR",
+      receipt: "order_" + booking._id,
+    };
+
+    const order = await razorpay.orders.create(options);
+
+    res.json({ order });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+router.post("/quote/:id", async (req, res) => {
+  try {
+    const { amount, message } = req.body;
+
+    const booking = await Booking.findByIdAndUpdate(
+      req.params.id,
+      {
+        quoteAmount: amount,
+        quoteMessage: message,
+        status: "quoted",
+      },
+      { new: true }
+    );
+
+    res.json({ booking });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Error sending quote" });
+  }
 });
 
 router.put("/status/:id", async (req, res) => {

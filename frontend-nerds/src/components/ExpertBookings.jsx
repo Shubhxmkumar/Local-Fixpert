@@ -33,32 +33,53 @@ const getConfig = (status = "pending") =>
 function BookingCard({ booking, onUpdateStatus }) {
   const status = booking.status?.toLowerCase() ?? "pending";
   const config = getConfig(status);
+  const [quote, setQuote] = useState("");
+  const [message, setMessage] = useState("");
+
+  const sendQuote = async () => {
+    try {
+      if (!quote) return alert("Enter amount");
+
+      await axios.post(
+        `http://localhost:3000/bookservice/quote/${booking._id}`,
+        {
+          amount: quote,
+          message,
+        }
+      );
+
+      alert("✅ Quote sent");
+      window.location.reload(); // quick refresh
+    } catch (err) {
+      console.error(err);
+      alert("❌ Failed to send quote");
+    }
+  };
 
   const openWhatsApp = (phone, name, service) => {
-  if (!phone) {
-    alert("Phone number not available");
-    return;
-  }
+    if (!phone) {
+      alert("Phone number not available");
+      return;
+    }
 
-  let formattedPhone = phone.replace(/\D/g, "");
+    let formattedPhone = phone.replace(/\D/g, "");
 
-  // 🇮🇳 India format
-  if (formattedPhone.length === 10) {
-    formattedPhone = "91" + formattedPhone;
-  }
+    // 🇮🇳 India format
+    if (formattedPhone.length === 10) {
+      formattedPhone = "91" + formattedPhone;
+    }
 
-  const message = encodeURIComponent(
-    `Hi ${name}, I'm your expert for ${service}. I'm reaching out regarding your booking.`
-  );
+    const message = encodeURIComponent(
+      `Hi ${name}, I'm your expert for ${service}. I'm reaching out regarding your booking.`
+    );
 
-  const url = `https://wa.me/${formattedPhone}?text=${message}`;
+    const url = `https://wa.me/${formattedPhone}?text=${message}`;
 
-  window.open(url, "_blank");
-};
+    window.open(url, "_blank");
+  };
 
   const isPending = status === "pending";
-  const isAccepted = status === "confirmed";
-
+const isAccepted = status === "accepted";
   return (
     <motion.div
       layout
@@ -94,7 +115,7 @@ function BookingCard({ booking, onUpdateStatus }) {
           <span className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full shrink-0 ${config.badge}`}>
             {getConfig(booking.status).label}
           </span>
-           
+
         </div>
 
         {/* Meta rows */}
@@ -102,7 +123,7 @@ function BookingCard({ booking, onUpdateStatus }) {
           <Row icon={<FiPhone size={11} />} text={booking.mobile || "N/A"} />
           <Row icon={<FiTool size={11} />} text={booking.serviceType || "Not specified"} />
           <Row icon={<FiMapPin size={11} />} text={booking.location || "N/A"} />
-          <Row icon={<FiCalendar size={11} />} text={new Date(booking.createdAt).toLocaleString()}  /> 
+          <Row icon={<FiCalendar size={11} />} text={new Date(booking.createdAt).toLocaleString()} />
         </div>
 
         {/* Action buttons */}
@@ -115,23 +136,42 @@ function BookingCard({ booking, onUpdateStatus }) {
               transition={{ duration: 0.18 }}
               className="flex flex-wrap gap-2 mt-3"
             >
-              
-              {isPending && (
-                <>
-                  <ActionBtn
-                    icon={<FiCheck size={12} />}
-                    label="Accept"
-                    color="bg-[#3B82F6] hover:bg-blue-700 text-white"
-                    onClick={() => onUpdateStatus(booking._id, "confirmed")}
+
+              {status === "pending" && (
+                <div className="mt-3 space-y-2 w-full">
+
+                  <input
+                    type="number"
+                    placeholder="Enter price (₹)"
+                    value={quote}
+                    onChange={(e) => setQuote(e.target.value)}
+                    className="w-full border px-2 py-1 rounded text-sm"
                   />
-                  <ActionBtn
-                    icon={<FiX size={12} />}
-                    label="Cancel"
-                    color="bg-[#FACC15] hover:bg-yellow-400 text-gray-900"
-                    onClick={() => onUpdateStatus(booking._id, "cancelled")}
+
+                  <input
+                    type="text"
+                    placeholder="Message (optional)"
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    className="w-full border px-2 py-1 rounded text-sm"
                   />
-                </>
+
+                  <button
+                    onClick={sendQuote}
+                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-xs font-semibold w-full"
+                  >
+                    Send Quote
+                  </button>
+                </div>
               )}
+              {status === "quoted" && (
+  <div className="mt-3 p-3 bg-blue-50 rounded text-sm">
+    <p>💰 Quote Sent: ₹{booking.quoteAmount}</p>
+    <p className="text-gray-600 text-xs">
+      Waiting for user response...
+    </p>
+  </div>
+)}
               {isAccepted && (
                 <ActionBtn
                   icon={<FiCheckCircle size={12} />}
@@ -141,17 +181,17 @@ function BookingCard({ booking, onUpdateStatus }) {
                 />
               )}
               <button
-    onClick={() =>
-      openWhatsApp(
-        booking.mobile,
-        booking.userId?.name,
-        booking.serviceType
-      )
-    }
-    className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2"
-  >
-    {<FiPhone size={11} />}
-  </button>
+                onClick={() =>
+                  openWhatsApp(
+                    booking.mobile,
+                    booking.userId?.name,
+                    booking.serviceType
+                  )
+                }
+                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2"
+              >
+                {<FiPhone size={11} />}
+              </button>
             </motion.div>
           )}
         </AnimatePresence>
@@ -198,8 +238,8 @@ function FilterTabs({ active, onChange }) {
           whileTap={{ scale: 0.96 }}
           onClick={() => onChange(tab)}
           className={`px-4 py-1.5 rounded-full text-xs font-bold border transition-all ${active === tab
-              ? "bg-blue-600 text-white border-blue-600 shadow"
-              : "bg-white text-slate-500 border-slate-200 hover:border-blue-400 hover:text-blue-600"
+            ? "bg-blue-600 text-white border-blue-600 shadow"
+            : "bg-white text-slate-500 border-slate-200 hover:border-blue-400 hover:text-blue-600"
             }`}
         >
           {tab}

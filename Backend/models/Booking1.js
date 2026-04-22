@@ -11,45 +11,34 @@ const bookingSchema = new mongoose.Schema(
       ref: "Expert",
       required: true,
     },
+    // expertID: { type: String, required: true},
     expertName: { type: String, required: true },
     serviceType: { type: String, required: true },
     description: { type: String },
-
     date: { type: String, required: true },
     location: { type: String, required: true },
     mobile: { type: String, required: true },
+    payment: { type: String, required: true },
     time: { type: String },
-
-    // ✅ STATUS FLOW
     status: {
       type: String,
-      enum: ["pending", "quoted", "accepted", "completed", "cancelled"],
+      enum: ["pending", "confirmed", "completed", "cancelled"],
       default: "pending",
-      lowercase: true,
+      lowercase: "true",
     },
-
-    // ✅ QUOTE SYSTEM
-    quoteAmount: Number,
-    quoteMessage: String,
-
-    // ✅ PAYMENT SYSTEM
-    paymentStatus: {
-      type: String,
-      default: "pending",
-    },
-    paymentId: String,
-
-    // ✅ PLATFORM LOGIC
     platformFee: {
-      type: Number,
-      default: 100,
-    },
-    expertEarning: Number,
-    totalAmount: Number,
-
-    // ⭐ rating
+  type: Number,
+  default: 100,
+},
+expertEarning: {
+  type: Number,
+},
+totalAmount: {
+  type: Number,
+},
     isRated: { type: Boolean, default: false },
   },
-  { timestamps: true }
+  { timestamps: true },
 );
-module.exports = mongoose.model("Booking", bookingSchema);
+
+module.exports = mongoose.model("Booking1", bookingSchema);

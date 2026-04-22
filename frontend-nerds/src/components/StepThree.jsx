@@ -14,7 +14,7 @@ const StepThree = ({ step, onBack }) => {
   const [location, setLocation] = useState("");
   const [mobile, setMobile] = useState("");
   const [payment, setPayment] = useState("");
-
+  
   const [serviceType, setServiceType] = useState(
     selectedExpert?.category || selectedExpert?.service || ""
   );
@@ -84,7 +84,7 @@ const StepThree = ({ step, onBack }) => {
       console.log("✅ Booking response:", response.data);
 
       alert("✅ Booking created successfully!");
-       navigate("/mybookings");
+      navigate("/mybookings");
       // 🔄 Reset form (optional)
       setDate("");
       setLocation("");
@@ -96,7 +96,7 @@ const StepThree = ({ step, onBack }) => {
 
       alert(
         error.response?.data?.message ||
-          "❌ Failed to create booking. Check console."
+        "❌ Failed to create booking. Check console."
       );
     }
   };
@@ -227,14 +227,16 @@ const StepThree = ({ step, onBack }) => {
                 <label className="block text-gray-700 font-medium mb-1">
                   Payment Method
                 </label>
-                <input
-                  type="text"
-                  placeholder="Eg. UPI / Cash"
+                <select
                   value={payment}
                   onChange={(e) => setPayment(e.target.value)}
                   className="w-full border border-gray-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                  required
-                />
+                >
+                  <option value="" >Select Payment</option>
+                  <option value="UPI">UPI</option>
+                  <option value="Cash">Cash</option>
+                  <option value="Card">Card</option>
+                </select>
               </div>
 
               <div className="flex items-start gap-2 mt-4">
