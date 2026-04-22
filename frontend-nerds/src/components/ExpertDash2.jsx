@@ -185,7 +185,7 @@ const [reviewsLoading, setReviewsLoading] = useState(true);
   }, []);
   const removeToast = (id) => setToasts((p) => p.filter((t) => t.id !== id));
 useEffect(() => {
-  setAvailability(user?.availability ?? false);
+  setAvailability(user?.availability ?? true);
 }, [user]);
   useEffect(() => {
     if (!user?._id) return;

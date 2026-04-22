@@ -11,11 +11,13 @@ import ExpertLogin from "./components/ExpertLogin";
 import ExpertBookings from "./components/ExpertBookings";
 import EditExpertProfile from "./components/EditExpertProfile";
 import axios from "axios";
-import { ToastContainer } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
+// import { ToastContainer } from "react-toastify";
+// import "react-toastify/dist/ReactToastify.css";
 import MyBookings from "./pages/Mybookings";
 import ExpertReviews from "./components/ExpertReviews"
 import Rebook from "./components/Rebook";
+
+ import { ToastProvider } from "./components/toast/ToastContext";
 
 axios.defaults.baseURL = "http://localhost:3000";
 axios.defaults.withCredentials = true;
@@ -24,8 +26,8 @@ function App() {
   return (
     <>
       <BrowserRouter>
-            <ToastContainer position="top-center" />
-
+        {/* <ToastContainer position="top-center" /> */}
+        <ToastProvider>
         <Routes>
 
           <Route path="/" element={<Home />} />
@@ -33,7 +35,7 @@ function App() {
           <Route path="/signup" element={<RegisterPage />} />
           <Route path="/login" element={<LoginPage />} />
           <Route path="/expert" element={<ExpertPage />} />
-          <Route path="expert/login" element={<ExpertLogin />} />          
+          <Route path="expert/login" element={<ExpertLogin />} />
           <Route path="/profile" element={<Profile />} />
           <Route path="/edit-profile/expert" element={<EditExpertProfile />} />
           <Route path="/expertbookings" element={<ExpertBookings />} />
@@ -41,6 +43,7 @@ function App() {
           <Route path="/expert/reviews/:expertId" element={<ExpertReviews />} />
           <Route path="/rebook/:id" element={<Rebook />} />
         </Routes>
+        </ToastProvider>
       </BrowserRouter>
     </>
   );

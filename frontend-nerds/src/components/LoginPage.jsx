@@ -3,21 +3,25 @@ import { Link, Navigate } from "react-router-dom";
 import axios from "axios";
 import heroimg from "../assets/home-page/LoginWorker.png"; // ✅ Make sure this path is correct
 import { useData } from "../Context/DataContext";
-import { toast } from "react-toastify";
+// import { toast } from "react-toastify";
+import { useToast } from "../components/toast/ToastContext";
 
 export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
-const { setUser } = useData();
+  const { setUser } = useData();
   axios.defaults.withCredentials = true; // Optional: keep if using cookies/sessions
+  const { addToast } = useToast();
 
   async function handleLogin(ev) {
     ev.preventDefault();
     try {
       const res = await axios.post("http://localhost:3000/login", { email, password });
       // setUser(email);
-      toast.success("Login successful!");
+      // toast.success("Login successful!");
+      // alert("Login successful!");
+      addToast("Login successfully", "success");
       // console.log(res.data.user)
       const user = res.data.user;
       setUser(user);
@@ -25,10 +29,13 @@ const { setUser } = useData();
     } catch (e) {
       if (e.response?.status === 401) {
         // alert("Invalid email or password");
-        toast.error("Invalid email or password");
+        // toast.error("Invalid email or password");
+        addToast("Invalid email or password", "error");
       } else {
-        toast.error("Server error. Please try again later.");
+        // toast.error("Server error. Please try again later.");
         // alert("Server error. Please try again later.");
+        addToast("Server error. Please try again later.", "error");
+
       }
     }
   }
@@ -102,15 +109,15 @@ const { setUser } = useData();
             Login
           </button>
 
-            <div className="text-center text-gray-600 text-sm mt-4">
-              Log in as Expert{" "}
-              <Link
-                className="underline text-blue-600 font-medium hover:text-blue-800"
-                to="/expert/login"
-              >
-                Login
-              </Link>
-            </div>
+          <div className="text-center text-gray-600 text-sm mt-4">
+            Log in as Expert{" "}
+            <Link
+              className="underline text-blue-600 font-medium hover:text-blue-800"
+              to="/expert/login"
+            >
+              Login
+            </Link>
+          </div>
           {/* Redirect to Register */}
           <div className="text-center text-gray-600 text-sm mt-4">
             Don’t have an account?{" "}
@@ -121,7 +128,7 @@ const { setUser } = useData();
               Register
             </Link>
           </div>
-          
+
         </form>
       </div>
     </div>
