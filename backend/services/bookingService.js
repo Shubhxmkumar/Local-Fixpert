@@ -213,7 +213,10 @@ const getExpertBookings = async (expertId) => {
 /*                      GET ACTIVE (CONFIRMED) BOOKINGS                       */
 /* -------------------------------------------------------------------------- */
 const getActiveBookings = async (expertId) => {
-  return await Booking.find({ expertId, status: "confirmed" })
+  return await Booking.find({
+    expertId,
+    status: { $in: ["accepted", "quoted"] }, // 🔥 FIX
+  })
     .populate("userId", "name")
     .sort({ createdAt: -1 });
 };
