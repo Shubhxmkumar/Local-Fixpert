@@ -1,8 +1,8 @@
 // middlewares/errorMiddleware.js
 
-/**
- * 404 handler — mount AFTER all routes
- */
+// /**
+//  * 404 handler — mount AFTER all routes
+//  */
 const notFound = (req, res, next) => {
   const error = new Error(`Not Found - ${req.originalUrl}`);
   res.status(404);

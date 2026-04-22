@@ -100,7 +100,7 @@ const Sk = ({ className = "w-full h-4 rounded-lg" }) => (
 const StatusBadge = ({ status }) => {
   const MAP = {
     pending:   "bg-yellow-100 text-yellow-800",
-    confirmed: "bg-green-100 text-green-800",
+    accepted: "bg-green-100 text-green-800",
     completed: "bg-blue-100 text-blue-800",
     cancelled: "bg-red-100 text-red-800",
   };
@@ -330,7 +330,7 @@ useEffect(() => {
               title="Active Jobs"
               count={activeJobs.length}
               action="All Bookings"
-              onAction={() => navigate("/expertbookings?tab=Confirmed")}
+              onAction={() => navigate("/expertbookings?tab=Accepted")}
             />
             <div className="bg-white rounded-b-2xl shadow-sm overflow-hidden min-h-28">
               {jobsLoading ? (
@@ -381,7 +381,7 @@ useEffect(() => {
                       </div>
                     </div>
                     <button
-                      onClick={() => navigate("/expertbookings?tab=Confirmed")}
+                      onClick={() => navigate("/expertbookings?tab=Accepted")}
                       className="bg-gradient-to-r from-blue-600 to-blue-400 text-white border-none rounded-xl px-4 py-2 text-xs font-bold cursor-pointer flex items-center gap-1.5 flex-shrink-0 hover:scale-105 transition-transform"
                     >
                       View <ChevronRight size={13} />
@@ -567,7 +567,7 @@ useEffect(() => {
             <div className="grid grid-cols-2 gap-2.5">
               {[
                 { label: "Pending",   tab: "Pending",   bg: "bg-yellow-50",  color: "text-yellow-800",  icon: Clock },
-                { label: "Confirmed", tab: "Confirmed", bg: "bg-green-50",   color: "text-green-800",   icon: CheckCircle },
+                { label: "Accepted", tab: "Accepted", bg: "bg-green-50",   color: "text-green-800",   icon: CheckCircle },
                 { label: "Completed", tab: "Completed", bg: "bg-blue-50",    color: "text-blue-800",    icon: Star },
                 { label: "Cancelled", tab: "Cancelled", bg: "bg-red-50",     color: "text-red-800",     icon: AlertCircle },
               ].map(({ label, tab, bg, color, icon: Icon }) => (

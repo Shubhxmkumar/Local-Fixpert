@@ -79,125 +79,133 @@ function BookingCard({ booking, onUpdateStatus }) {
   };
 
   const isPending = status === "pending";
-const isAccepted = status === "accepted";
-  return (
-    <motion.div
-      layout
-      initial={{ opacity: 0, y: 22 }}
-      animate={{ opacity: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.95 }}
-      transition={{ duration: 0.32, ease: [0.4, 0, 0.2, 1] }}
-      className={`relative rounded-2xl p-5 flex gap-4 items-start shadow-md border overflow-hidden transition-all duration-300 ${config.card}`}
-    >
-      {/* Decorative glow */}
-      <div className="absolute -top-6 -right-6 w-24 h-24 rounded-full  blur-2xl pointer-events-none" />
+const isAccepted = status === "accepted" ;
 
-      {/* Avatar */}
-      <div className="shrink-0">
-        <div className="w-16 h-16 rounded-full ring-4 ring-white/60 shadow-lg bg-white/30 flex items-center justify-center overflow-hidden">
-          <img
-            src={`https://ui-avatars.com/api/?name=${encodeURIComponent(
-              booking.userId?.name ?? "U"
-            )}&background=3b82f6&color=fff&size=128`}
-            alt={booking.userId?.name ?? "User"}
-            className="w-full h-full object-cover"
-          />
+   return (
+  <div className="bg-[#f6f7fb] rounded-2xl p-5 shadow-[0_6px_20px_rgba(0,0,0,0.06)]">
+
+    {/* HEADER */}
+    <div className="flex justify-between items-center">
+
+      <div className="flex items-center gap-3">
+        <img
+          src={`https://ui-avatars.com/api/?name=${booking.userId?.name}`}
+          className="w-12 h-12 rounded-full object-cover"
+        />
+
+        <div>
+          <h3 className="font-semibold text-gray-800 text-[15px]">
+            {booking.userId?.name}
+          </h3>
+          <p className="text-xs text-gray-400">
+            M. {booking.mobile}
+          </p>
         </div>
       </div>
 
-      {/* Body */}
-      <div className="flex-1 min-w-0">
-        {/* Name + badge */}
-        <div className="flex items-start justify-between gap-2 flex-wrap">
-          <h3 className="text-[16px] font-bold text-slate-800 tracking-wide leading-tight drop-shadow-sm">
-            {booking.userId?.name ?? "Unknown User"}
-          </h3>
-          <span className={`text-[11px] font-semibold px-2.5 py-0.5 rounded-full shrink-0 ${config.badge}`}>
-            {getConfig(booking.status).label}
-          </span>
+      {/* STATUS */}
+      <span className="text-[11px] px-3 py-1 rounded-full font-semibold bg-[#fde8dc] text-[#c2410c]">
+       {booking.status}
+      </span>
+    </div>
 
-        </div>
+    {/* SUMMARY */}
+    <div className="mt-4 bg-[#eef2f7] rounded-xl p-4 text-sm text-gray-600">
 
-        {/* Meta rows */}
-        <div className="mt-2 space-y-1">
-          <Row icon={<FiPhone size={11} />} text={booking.mobile || "N/A"} />
-          <Row icon={<FiTool size={11} />} text={booking.serviceType || "Not specified"} />
-          <Row icon={<FiMapPin size={11} />} text={booking.location || "N/A"} />
-          <Row icon={<FiCalendar size={11} />} text={new Date(booking.createdAt).toLocaleString()} />
-        </div>
+      <p className="font-medium text-gray-700 mb-2 flex items-center gap-2">
+        📄 Summary
+      </p>
 
-        {/* Action buttons */}
-        <AnimatePresence>
-          {(isPending || isAccepted) && (
-            <motion.div
-              initial={{ opacity: 0, y: 6 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -6 }}
-              transition={{ duration: 0.18 }}
-              className="flex flex-wrap gap-2 mt-3"
-            >
+      <p className="flex items-center gap-2 text-gray-600">
+        <FiMapPin size={14} />
+        {booking.location}
+      </p>
 
-              {status === "pending" && (
-                <div className="mt-3 space-y-2 w-full">
+      <p className="flex items-center gap-2 text-gray-600 mt-1">
+        <FiCalendar size={14} />
+        {booking.date} {booking.time}
+      </p>
 
-                  <input
+      {booking.description && (
+        <p className="text-xs text-gray-400 mt-2 border-t pt-2">
+          {booking.description}
+        </p>
+        
+      )}
+        {status === "pending" && (
+      <input
                     type="number"
                     placeholder="Enter price (₹)"
                     value={quote}
                     onChange={(e) => setQuote(e.target.value)}
-                    className="w-full border px-2 py-1 rounded text-sm"
-                  />
-
-                  <input
-                    type="text"
-                    placeholder="Message (optional)"
-                    value={message}
-                    onChange={(e) => setMessage(e.target.value)}
-                    className="w-full border px-2 py-1 rounded text-sm"
-                  />
-
-                  <button
-                    onClick={sendQuote}
-                    className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-full text-xs font-semibold w-full"
-                  >
-                    Send Quote
-                  </button>
-                </div>
-              )}
-              {status === "quoted" && (
+                    className="w-full text-xs text-gray-00 mt-2 border-t-b pt-2 outline-none"
+                  />)
+                  }
+                  {status === "quoted"  && (
   <div className="mt-3 p-3 bg-blue-50 rounded text-sm">
-    <p>💰 Quote Sent: ₹{booking.quoteAmount}</p>
-    <p className="text-gray-600 text-xs">
-      Waiting for user response...
-    </p>
+    <p>Service Fees : ₹{booking.quoteAmount}</p>
+  </div>)}
+  {(status === "completed" || status ==="accepted")  && (
+  <div className="mt-3 p-3 bg-blue-50 rounded text-sm">
+    <p>Service Fees : ₹{booking.quoteAmount}</p>
+     <p>Payment Recieved</p>
+  </div>)}
+    </div>
+
+    {/* FOOTER */}
+    <div className="flex justify-between items-center mt-5">
+
+      {/* CHAT BUTTON */}
+      <button className="flex items-center gap-2 px-4 py-2 rounded-xl border border-gray-300 text-blue-600 bg-white text-sm hover:bg-gray-50 transition">
+        <FiPhone size={14} />
+        Chat
+      </button>
+      
+
+      {/* RIGHT ACTIONS */}
+      <div className="flex gap-3">
+
+        
+
+ {status === "quoted"  && (
+ <button onClick={sendQuote} disabled
+         className="flex items-center gap-2 px-6 py-2 rounded-xl bg-gray-400 text-white text-sm font-medium shadow">
+          Payment Pending 
+        </button>)}
+        {status === "pending" && (
+  <div className="flex gap-3">
+    <button onClick={() => onUpdateStatus(booking._id, "cancelled")}
+ className="flex items-center gap-2 px-5 py-2 rounded-xl bg-gray-200 text-red-500 text-sm font-medium shadow-inner">
+      ✕ Reject
+    </button>
+
+    <button
+      onClick={sendQuote}
+      className="flex items-center gap-2 px-6 py-2 rounded-xl bg-blue-600 text-white text-sm font-medium shadow"
+    >
+      Send Quote
+    </button>
   </div>
 )}
-              {isAccepted && (
-                <ActionBtn
-                  icon={<FiCheckCircle size={12} />}
-                  label="Mark Complete"
-                  color="bg-emerald-600 hover:bg-emerald-700 text-whtie"
-                  onClick={() => onUpdateStatus(booking._id, "completed")}
-                />
-              )}
-              <button
-                onClick={() =>
-                  openWhatsApp(
-                    booking.mobile,
-                    booking.userId?.name,
-                    booking.serviceType
-                  )
-                }
-                className="bg-green-500 hover:bg-green-600 text-white px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2"
-              >
-                {<FiPhone size={11} />}
-              </button>
-            </motion.div>
-          )}
-        </AnimatePresence>
+{status === "accepted"  && (
+ <button onClick={() => onUpdateStatus(booking._id, "completed")}
+         className="flex items-center gap-2 px-6 py-2 rounded-xl bg-blue-600 text-white text-sm font-medium shadow">
+          Mark Complete
+        </button>)}
+         {status === "completed"  && (
+ <button onClick={sendQuote} disabled
+         className="flex items-center gap-2 px-6 py-2 rounded-xl bg-gray-400 text-white text-sm font-medium shadow">
+          Service completed
+        </button>)}
+
+
+
+
       </div>
-    </motion.div>
-  );
+    </div>
+
+  </div>
+);
 }
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
@@ -225,7 +233,7 @@ function ActionBtn({ icon, label, color, onClick }) {
 }
 
 // ─── Filter tab ───────────────────────────────────────────────────────────────
-const TABS = ["All", "Pending", "Confirmed", "Completed", "Cancelled"];
+const TABS = ["All", "Pending", "Accepted", "Completed", "Cancelled"];
 
 function FilterTabs({ active, onChange }) {
   const [searchParams] = useSearchParams();
@@ -292,64 +300,82 @@ const ExpertBookings = () => {
 
   return (
     <>
-      <Navbar />
-      <div className="mt-18 min-h-screen bg-gradient-to-br from-slate-100 via-blue-50 to-slate-200 py-12 px-4">
-        <div className="max-w-3xl mx-auto">
+    return (
+  <>
+    <Navbar />
 
-          {/* Header */}
-          <motion.div
-            initial={{ opacity: 0, y: -14 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.45 }}
-            className="text-center mb-8"
-          >
-            <h2
-              className="text-3xl font-extrabold text-slate-800 tracking-tight"
-              style={{ fontFamily: "'Georgia', serif" }}
-            >
-              My Bookings
-            </h2>
-            <p className="text-sm text-slate-500 mt-1">
-              Manage and respond to your service requests
-            </p>
-          </motion.div>
+    <div className="mt-20 min-h-screen bg-[#f3f5f9] px-6 py-8">
+      <div className="max-w-7xl mx-auto">
 
-          {/* Filter tabs */}
-          <FilterTabs active={filter} onChange={setFilter} />
+        {/* HEADER */}
+        <div className="mb-6">
+          <h1 className="text-2xl font-semibold text-gray-800">
+            My Bookings
+          </h1>
+          <p className="text-sm text-gray-500">
+            Manage and track your service requests and appointments.
+          </p>
+        </div>
 
-          {/* States */}
-          {loading ? (
-            <div className="flex justify-center py-20">
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ repeat: Infinity, duration: 0.9, ease: "linear" }}
-                className="w-8 h-8 rounded-full border-4 border-blue-400 border-t-transparent"
-              />
+        {/* GRID */}
+        <div className="grid grid-cols-12 gap-6">
+
+          {/* SIDEBAR */}
+          <div className="col-span-3 space-y-5">
+
+            {/* FILTER */}
+            <div className="bg-white rounded-2xl p-4 shadow-sm border">
+              <h3 className="text-sm font-semibold mb-3">Status Filter</h3>
+
+              {["All", "Pending", "Accepted", "Completed"].map((tab) => (
+                <div
+                  key={tab}
+                  onClick={() => setFilter(tab)}
+                  className={`flex items-center gap-2 px-3 py-2 rounded-lg cursor-pointer ${
+                    filter === tab ? "bg-blue-100 text-blue-600" : "hover:bg-gray-100"
+                  }`}
+                >
+                  <div className="w-4 h-4 border rounded-full flex items-center justify-center">
+                    {filter === tab && (
+                      <div className="w-2 h-2 bg-blue-600 rounded-full" />
+                    )}
+                  </div>
+                  <span className="text-sm">{tab}</span>
+                </div>
+              ))}
             </div>
-          ) : filtered.length === 0 ? (
-            <motion.div
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              className="flex flex-col items-center gap-3 py-24 text-slate-400"
-            >
-              <FiInbox size={44} strokeWidth={1.2} />
-              <p className="text-sm font-medium">No bookings found</p>
-            </motion.div>
-          ) : (
-            <motion.div layout className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-              <AnimatePresence>
-                {filtered.map((b) => (
-                  <BookingCard
-                    key={b._id}
-                    booking={b}
-                    onUpdateStatus={updateStatus}
-                  />
-                ))}
-              </AnimatePresence>
-            </motion.div>
-          )}
+
+            {/* STATS */}
+            <div className="bg-gradient-to-r from-blue-500 to-cyan-500 text-white rounded-2xl p-5">
+              <h2 className="text-3xl font-bold">{filtered.length}</h2>
+              <p className="text-sm">Active Requests</p>
+            </div>
+
+          </div>
+
+          {/* BOOKINGS LIST */}
+          <div className="col-span-9 space-y-5">
+
+            {loading ? (
+              <p>Loading...</p>
+            ) : filtered.length === 0 ? (
+              <p>No bookings</p>
+            ) : (
+              filtered.map((b) => (
+                <BookingCard
+                  key={b._id}
+                  booking={b}
+                  onUpdateStatus={updateStatus}
+                />
+              ))
+            )}
+
+          </div>
         </div>
       </div>
+    </div>
+  </>
+);
     </>
   );
 };
