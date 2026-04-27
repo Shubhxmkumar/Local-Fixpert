@@ -395,13 +395,13 @@ export default function MyBookings() {
       >
         <FiPhone size={14} /> Chat
       </button>
-
-      <button
+      {(booking.status === "pending"|| booking.status === "quoted") && (<button 
         onClick={() => rejectQuote(booking._id)}
         className="px-4 py-2 text-sm border border-gray-300 rounded-xl text-red-500 hover:bg-red-50 flex items-center gap-1"
       >
         ✕ Reject
-      </button>
+      </button>)}
+      
 
       <button
         onClick={() => navigate(`/rebook/${booking._id}`)}
@@ -499,7 +499,7 @@ export default function MyBookings() {
               })()}
 
               {/* 🔘 METHOD SELECT */}
-              <div className="flex justify-between mb-4">
+              <div className="flex justify-between border border-gray-300 rounded-xl mb-4">
                 {["card", "upi", "Cash"].map((m) => (
                   <button
                     key={m}

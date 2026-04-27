@@ -1,6 +1,7 @@
 .env
-Backend/.env
+Backend
+backend/.env
 node_modules/
-Backend/node_modules/
+backend/node_modules/
 fixpert-refactored.zip
 

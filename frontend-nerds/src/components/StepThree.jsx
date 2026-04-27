@@ -64,8 +64,8 @@ const StepThree = ({ step, onBack }) => {
       const bookingData = {
         userId: storedUser._id,
         expertId: selectedExpert._id,
-        expertName: selectedExpert.fullName, // ✅ fixed
-        serviceType, // ✅ correct field
+        expertName: selectedExpert.fullName,
+        serviceType, 
         description,
         date,
         time,
@@ -160,9 +160,9 @@ const StepThree = ({ step, onBack }) => {
                 </p>
               </div>
               <div>
-                <p className="text-sm text-gray-600">Estimated Price</p>
+                {/* <p className="text-sm text-gray-600">Estimated Price</p> */}
                 <p className="text-lg font-semibold text-gray-800">
-                  ₹{selectedExpert.price || "300"}/hour
+                  {/* ₹{selectedExpert.price || "300"}/hour */}
                 </p>
               </div>
             </div>
