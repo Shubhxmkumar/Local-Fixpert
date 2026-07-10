@@ -24,7 +24,7 @@ app.use(cookieParser());
 app.use(
   cors({
     origin: [
-      "https://5173-cs-216d3b45-f3d8-4c55-a68c-03929d53b127.cs-asia-east1-duck.cloudshell.dev",
+      "https://local-fixpert.onrender.com",
       "http://localhost:5173",
     ],
     credentials: true,
