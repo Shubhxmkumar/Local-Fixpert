@@ -10,13 +10,13 @@ export default function RegisterPage() {
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
   const [showForm, setShowForm] = useState(false);
-const { setUser } = useData();
+const { setUser,url } = useData();
 
 
   async function registerUser(ev) {
   ev.preventDefault();
   try {
-    const res = await axios.post("https://local-fixpert-backend.onrender.com/register/", {
+    const res = await axios.post(`${url}/register/`, {
       name,
       email,
       password,
