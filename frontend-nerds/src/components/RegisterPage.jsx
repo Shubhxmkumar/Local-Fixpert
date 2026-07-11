@@ -17,6 +17,7 @@ const url = useData();
   ev.preventDefault();
   try {
     const res = await axios.post(`${url}/register/`, {
+    const res = await axios.post(`${url}/register/`, {
       name,
       email,
       password,

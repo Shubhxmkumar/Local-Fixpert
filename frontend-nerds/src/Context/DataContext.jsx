@@ -41,6 +41,7 @@ export const DataProvider = ({ children }) => {
         setserviceprovide,
         user,
         setUser,
+        url,
       }}
     >
       {children}

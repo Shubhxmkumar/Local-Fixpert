@@ -358,63 +358,73 @@ export default function MyBookings() {
           <span>₹{booking.quoteAmount}</span>
         </div>
 
-        <div className="flex justify-between text-sm text-gray-600 mt-1">
-          <span>Platform Fee</span>
-          <span>₹{booking.platformFee || 100}</span>
-        </div>
+            {/* DESC */}
+            {booking.description && (
+              <p className="text-xs text-gray-500 mt-2">
+                {booking.description}
+              </p>
+            )}
 
-        <div className="border-t mt-3 pt-2 flex justify-between font-semibold text-gray-800">
-          <span>Total Payable</span>
-          <span className="text-blue-600">
-            ₹{(booking.quoteAmount || 0) + (booking.platformFee || 100)}
-          </span>
-        </div>
-      </div>
-    ) : (
-      <div className="bg-gray-100 border border-gray-200 rounded-xl p-6 py-10 flex flex-col gap-2 items-center justify-center text-center text-blue-500 ">
-        ⏳ <br/> <br/>Awaiting quote from the professional
-      </div>
-    )}
-  </div>
+            {/* PAYMENT */}
+            <div className="flex justify-between items-center mt-3">
+              <span className="text-xs bg-green-100 px-2 py-1 rounded">
+                {booking.payment}
+              </span>
+              <span className="text-xs text-gray-400">
+                {new Date(booking.createdAt).toLocaleString()}
+              </span>
+            </div>
 
-  {/* FOOTER ACTIONS */}
-  <div className="flex justify-between items-center mt-5 flex-wrap gap-3">
-    
-    {/* LEFT ACTIONS */}
-    <div className="flex gap-2 flex-wrap">
-      
-      <button
-        onClick={() =>
-          openWhatsApp(
-            booking.expertId?.mobile,
-            booking.expertName,
-            booking.serviceType
-          )
-        }
-        className="px-4 py-2 text-sm border border-gray-300 rounded-xl text-blue-600 hover:bg-blue-50 flex items-center gap-1"
-      >
-        <FiPhone size={14} /> Chat
-      </button>
-      {(booking.status === "pending"|| booking.status === "quoted") && (<button 
-        onClick={() => rejectQuote(booking._id)}
-        className="px-4 py-2 text-sm border border-gray-300 rounded-xl text-red-500 hover:bg-red-50 flex items-center gap-1"
-      >
-        ✕ Reject
-      </button>)}
-      
+            {/* ACTIONS */}
+            <div className="flex gap-2 mt-4 flex-wrap">
+              {booking.status !== "cancelled" && (
+                <button
+                  onClick={() => cancelBooking(booking._id)}
+                  className="flex items-center gap-1 bg-red-500 text-white px-3 py-1 rounded-full text-xs hover:bg-red-600"
+                >
+                  <FiX size={12} /> Cancel
+                </button>
+              )}
 
-      <button
-        onClick={() => navigate(`/rebook/${booking._id}`)}
-        className="px-4 py-2 text-sm border border-gray-300 rounded-xl text-gray-700 hover:bg-gray-100 flex items-center gap-1"
-      >
-        <FiRefreshCw size={14} /> Rebook
-      </button>
-    </div>
+              <button
+               onClick={() => navigate(`/rebook/${booking._id}`)}
+                className="flex items-center gap-1 bg-blue-500 text-white px-3 py-1 rounded-full text-xs hover:bg-blue-600"
+              >
+                <FiRefreshCw size={12} /> Rebook
+              </button>
 
-    {/* PRIMARY CTA */}
-   {renderPrimaryCTA(booking)}
-  </div>
-</motion.div>
+              <button
+                onClick={() =>
+                  openWhatsApp(
+                    booking.expertId?.mobile,
+                    booking.expertName,
+                    booking.serviceType,
+                  )
+                }
+                className="flex items-center gap-1 bg-green-500 text-white px-3 py-1 rounded-full text-xs hover:bg-green-600"
+              >
+                <FiPhone size={12} /> Chat
+              </button>
+
+              {booking.status === "completed" && !booking.isRated && (
+                <button
+                  onClick={() => setRatingModal(booking)}
+                  className="bg-yellow-500 text-white px-3 py-1 rounded-full text-xs"
+                >
+                  ⭐ Rate
+                </button>
+              )}
+              {booking.isRated && (
+                <div className="text-yellow-500 text-sm mt-2">
+                  {booking.isRated && (
+                    <span className="text-yellow-500 text-sm font-medium">
+                      Rated ⭐
+                    </span>
+                  )}
+                </div>
+              )}
+            </div>
+          </motion.div>
         ))}
         {ratingModal && (
           <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
@@ -469,192 +479,6 @@ export default function MyBookings() {
                   className="flex-1 bg-yellow-500 text-white py-2 rounded"
                 >
                   Submit
-                </button>
-              </div>
-            </div>
-          </div>
-        )}
-        {paymentModal && (
-
-          <div className="fixed inset-0 bg-black/40 flex justify-center items-center z-50">
-            <div className="bg-white/95 p-6 rounded-2xl w-96 shadow-lg">
-
-              <h3 className="text-lg font-bold mb-2 text-center">
-                💳 Payment
-              </h3>
-
-
-
-              {(() => {
-                const service = paymentModal?.quoteAmount || 0;
-                const fee = paymentModal?.platformFee || 100;
-                const total = service + fee;
-
-                return (
-                  <div className="text-center text-sm mb-3">
-
-                    <p className="">Amount: ₹{total}</p>
-                  </div>
-                );
-              })()}
-
-              {/* 🔘 METHOD SELECT */}
-              <div className="flex justify-between border border-gray-300 rounded-xl mb-4">
-                {["card", "upi", "Cash"].map((m) => (
-                  <button
-                    key={m}
-                    onClick={() => setMethod(m)}
-                    className={`px-3 py-1 rounded-full text-xs ${method === m
-                      ? "bg-blue-600 text-white"
-                      : "bg-gray-200 text-gray-600"
-                      }`}
-                  >
-                    {m.toUpperCase()}
-                  </button>
-                ))}
-              </div>
-
-              {/* 💳 CARD */}
-              {method === "card" && (
-                <>
-                  <input
-                    placeholder="Card Number"
-                    className="my-2 w-full border border-gray-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                    value={card.number}
-                    onChange={(e) =>
-                      setCard({ ...card, number: e.target.value })
-                    }
-                  />
-
-                  <input
-                    placeholder="Card Holder Name"
-                    className="my-2 w-full border border-gray-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                    value={card.name}
-                    onChange={(e) =>
-                      setCard({ ...card, name: e.target.value })
-                    }
-                  />
-
-                  <div className="flex gap-2">
-                    <input
-                      placeholder="MM/YY"
-                      className="w-1/2 my-2 border border-gray-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                      value={card.expiry}
-                      onChange={(e) =>
-                        setCard({ ...card, expiry: e.target.value })
-                      }
-                    />
-
-                    <input
-                      placeholder="CVV"
-                      type="password"
-                      className="w-1/2 my-2 border border-gray-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                      value={card.cvv}
-                      onChange={(e) =>
-                        setCard({ ...card, cvv: e.target.value })
-                      }
-                    />
-                  </div>
-                </>
-              )}
-
-              {/* 📱 UPI */}
-              {method === "upi" && (
-                <input
-                  placeholder="Enter UPI ID (name@upi)"
-                  className="w-full border border-gray-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                  value={upi}
-                  onChange={(e) => setUpi(e.target.value)}
-                />
-              )}
-
-              {/* 🏦 NET BANKING */}
-              {method === "netbanking" && (
-                <select
-                  className="w-full border border-gray-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-blue-500 outline-none"
-                  value={bank}
-                  onChange={(e) => setBank(e.target.value)}
-                >
-                  <option value="">Select Bank</option>
-                  <option>HDFC</option>
-                  <option>SBI</option>
-                  <option>ICICI</option>
-                </select>
-              )}
-
-              {/* 🔘 BUTTONS */}
-              <div className="flex gap-2 mt-3">
-                <button
-                  onClick={() => setPaymentModal(null)}
-                  className="bg-gray-500 hover:bg-blue-700 flex-1 text-white font-semibold py-2.5 rounded-xl transition-all duration-300 shadow-md hover:scale-[1.02]"
-                >
-                  Cancel
-                </button>
-
-                <button
-                  onClick={async () => {
-                    try {
-                      setPayLoading(true);
-
-                      // ✅ VALIDATION
-                      if (method === "card") {
-                        if (!isValidCardNumber(card.number))
-                          return alert("Invalid card number");
-                        if (!card.name)
-                          return alert("Enter card holder name");
-                        if (!isValidExpiry(card.expiry))
-                          return alert("Invalid expiry");
-                        if (!/^\d{3,4}$/.test(card.cvv))
-                          return alert("Invalid CVV");
-                      }
-
-                      if (method === "upi") {
-                        if (!isValidUPI(upi))
-                          return alert("Invalid UPI ID");
-                      }
-
-                      if (method === "netbanking") {
-                        if (!bank)
-                          return alert("Select a bank");
-                      }
-
-                      // 1️⃣ Accept booking
-                      await axios.post(
-                        `${url}/bookservice/accept/${paymentModal._id}`
-                      );
-
-                      // 2️⃣ Fake delay
-                      await new Promise((r) => setTimeout(r, 1500));
-
-                      // 3️⃣ Verify payment
-                      await axios.post(
-                        `${url}/bookservice/verify-payment`,
-                        {
-                          bookingId: paymentModal._id,
-                          paymentId:
-                            "FAKE_" + method + "_" + Date.now(),
-                        }
-                      );
-
-                      alert("✅ Payment Successful");
-
-                      setPaymentModal(null);
-                      setCard({ number: "", name: "", expiry: "", cvv: "" });
-                      setUpi("");
-                      setBank("");
-
-                      fetchBookings();
-
-                    } catch (err) {
-                      console.error(err);
-                      alert("❌ Payment failed");
-                    } finally {
-                      setPayLoading(false);
-                    }
-                  }}
-                  className="bg-blue-600 hover:bg-blue-700 flex-1 text-white font-semibold py-2.5 rounded-xl transition-all duration-300 shadow-md hover:scale-[1.02]"
-                >
-                  {payLoading ? "Processing..." : "Pay Now"}
                 </button>
               </div>
             </div>
