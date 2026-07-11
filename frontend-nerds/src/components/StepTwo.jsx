@@ -7,7 +7,7 @@ import { FaStar, FaRegStar } from "react-icons/fa";
 
 
 const StepTwo = ({ onNext, step, onBack }) => {
-  const { setSelectedExpert, locationforfilter, serviceselect } = useData();
+  const { setSelectedExpert, locationforfilter, serviceselect,url } = useData();
 
   // ✅ ALL state inside component
   const [experts, setExperts] = useState([]);
@@ -20,7 +20,7 @@ const StepTwo = ({ onNext, step, onBack }) => {
   useEffect(() => {
     const fetchExperts = async () => {
       try {
-        const res = await axios.get("http://localhost:3000/expert/experts");
+        const res = await axios.get(`${url}/expert/experts`);
         setAllExperts(res.data);
         setExperts(res.data);
       } catch (err) {

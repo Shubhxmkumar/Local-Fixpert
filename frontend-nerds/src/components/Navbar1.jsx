@@ -13,7 +13,7 @@ import { useData } from "../Context/DataContext";
 const Navbar = () => {
   const navigate = useNavigate();
   const [menuOpen, setMenuOpen] = useState(false);
-  const { user, setUser } = useData();
+  const { user, setUser,url} = useData();
   const [dropdown, setDropdown] = useState(false);
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 const [notifications, setNotifications] = useState([
@@ -44,7 +44,7 @@ const [showNotif, setShowNotif] = useState(false);
   useEffect(() => {
   if (user?._id) {
     axios
-      .get(`http://localhost:3000/notifications/${user._id}`)
+      .get(`${url}/notifications/${user._id}`)
       .then((res) => setNotifications(res.data))
       .catch(console.log);
   }

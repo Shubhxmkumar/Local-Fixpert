@@ -35,13 +35,14 @@ function BookingCard({ booking, onUpdateStatus }) {
   const config = getConfig(status);
   const [quote, setQuote] = useState("");
   const [message, setMessage] = useState("");
+  const {url} = useData();
 
   const sendQuote = async () => {
     try {
       if (!quote) return alert("Enter amount");
 
       await axios.post(
-        `http://localhost:3000/bookservice/quote/${booking._id}`,
+        `${url}/bookservice/quote/${booking._id}`,
         {
           amount: quote,
           message,
@@ -272,7 +273,7 @@ const ExpertBookings = () => {
     if (!expert?._id) return;
     setLoading(true);
     axios
-      .get(`http://localhost:3000/bookservice/expert/${expert._id}`)
+      .get(`${url}/bookservice/expert/${expert._id}`)
       .then((res) => { setBookings(res.data); console.log(res.data); })
       .catch((err) => console.log(err))
       .finally(() => setLoading(false));
@@ -282,7 +283,7 @@ const ExpertBookings = () => {
   const updateStatus = async (id, status) => {
     try {
       const res = await axios.put(
-        `http://localhost:3000/bookservice/status/${id}`,
+        `${url}/bookservice/status/${id}`,
         { status }
       );
       setBookings((prev) => prev.map((b) => (b._id === id ? res.data : b)));

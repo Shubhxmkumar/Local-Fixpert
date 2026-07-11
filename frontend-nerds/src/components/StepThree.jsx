@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 
 const StepThree = ({ step, onBack }) => {
   const navigate = useNavigate();
-  const { selectedExpert } = useData();
+  const { selectedExpert,url } = useData();
 
   // 🧾 Form state
   const [date, setDate] = useState("");
@@ -77,7 +77,7 @@ const StepThree = ({ step, onBack }) => {
       console.log("📤 Booking data being sent:", bookingData);
 
       const response = await axios.post(
-        "http://localhost:3000/bookservice",
+        `${url}/bookservice`,
         bookingData
       );
 

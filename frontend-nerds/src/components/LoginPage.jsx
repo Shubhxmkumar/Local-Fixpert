@@ -10,14 +10,14 @@ export default function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
-  const { setUser } = useData();
+  const { setUser,url } = useData();
   axios.defaults.withCredentials = true; // Optional: keep if using cookies/sessions
   const { addToast } = useToast();
 
   async function handleLogin(ev) {
     ev.preventDefault();
     try {
-      const res = await axios.post("http://localhost:3000/login", { email, password });
+      const res = await axios.post(`${url}/login`, { email, password });
       // setUser(email);
       // toast.success("Login successful!");
       // alert("Login successful!");

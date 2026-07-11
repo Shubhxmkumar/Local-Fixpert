@@ -5,7 +5,7 @@ import axios from "axios";
 import { useData } from "../Context/DataContext";
 
 const ExpertPage = () => {
-  const { setUser } = useData();
+  const { setUser,url } = useData();
 
   const navigate = useNavigate();
 
@@ -54,7 +54,7 @@ const ExpertPage = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:3000/expert/regexpert",
+        `${url}/expert/regexpert`,
         form
       );
 

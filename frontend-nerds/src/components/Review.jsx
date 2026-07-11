@@ -9,6 +9,7 @@ export default function Review() {
   const [userRating, setUserRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
   const [reviews, setReviews] = useState([]);
+  const { user,url } = useData();
 
 
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -22,7 +23,6 @@ export default function Review() {
   const handleWebSiteRatingChange = (e) => {
     setWebsiteData({ ...websiteData, [e.target.name]: e.target.value });
   };
-  const { user } = useData();
 
 const handleWebsiteRatingSubmit = async (e) => {
   e.preventDefault();
@@ -45,7 +45,7 @@ const handleWebsiteRatingSubmit = async (e) => {
       };
 
       await axios.post(
-        "http://localhost:3000/review/review-insert",
+        `${url}/review/review-insert`,
         websitRatingData
       );
 

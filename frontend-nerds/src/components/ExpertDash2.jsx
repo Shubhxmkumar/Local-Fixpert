@@ -7,8 +7,8 @@ import {
   Bell, ChevronRight, MapPin, Calendar, Briefcase,
   TrendingUp, X, AlertCircle, Wifi, WifiOff,
 } from "lucide-react";
+  // const BASE = "http://localhost:3000";
 
-const BASE = "http://localhost:3000";
 
 const fmtDate = (d) =>
   d
@@ -164,7 +164,10 @@ const ProfileRow = ({ icon: Icon, iconBg, iconColor, label, sublabel, onClick, d
 
 // ─── MAIN COMPONENT ──────────────────────────────────────────────────────────
 const ExpertDashboard = () => {
-  const { user, setUser } = useData();
+  const { user, setUser,url } = useData();
+  const BASE = url;
+  // const BASE = "http://localhost:3000";
+
   console.log(user);
   const [reviews, setReviews] = useState([]);
 const [reviewsLoading, setReviewsLoading] = useState(true);

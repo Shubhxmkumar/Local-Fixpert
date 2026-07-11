@@ -13,7 +13,7 @@ import {
 } from "lucide-react";
 
 const ExpertDashboard = () => {
-  const { user, setUser } = useData();
+  const { user, setUser, url} = useData();
   const navigate = useNavigate();
   const [stats, setStats] = useState(null);
   const [activeJobs, setActiveJobs] = useState([]);
@@ -22,7 +22,7 @@ const ExpertDashboard = () => {
     if (!user?._id) return;
 
     axios
-      .get(`http://localhost:3000/bookservice/stats/${user._id}`)
+      .get(`${url}/bookservice/stats/${user._id}`)
       .then((res) => { setStats(res.data.stats); console.log(res.data.stats); })
       .catch((err) => console.log(err));
   }, [user]);
@@ -30,7 +30,7 @@ const ExpertDashboard = () => {
     if (!user?._id) return;
 
     axios
-      .get(`http://localhost:3000/bookservice/expert/active/${user._id}`)
+      .get(`${url}/bookservice/expert/active/${user._id}`)
       .then((res) => {
 setActiveJobs(res.data?.bookings || []);        console.log("Active Jobs:", res.data.bookings);
       })

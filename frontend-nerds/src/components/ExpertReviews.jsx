@@ -3,6 +3,7 @@ import axios from "axios";
 import { useParams } from "react-router-dom";
 import { FaStar, FaRegStar } from "react-icons/fa";
 import Navbar from "./Navbar";
+import { useData } from "../Context/DataContext";
 
 export default function ExpertProfile() {
   const { expertId } = useParams();
@@ -10,11 +11,11 @@ export default function ExpertProfile() {
   const [reviews, setReviews] = useState([]);
   const [expert, setExpert] = useState(null);
   const [avgRating, setAvgRating] = useState(0);
-
+  const {url} = useData();
   useEffect(() => {
     // ✅ Fetch reviews
     axios
-      .get(`http://localhost:3000/bookservice/reviews/${expertId}`)
+      .get(`${url}/bookservice/reviews/${expertId}`)
       .then((res) => {
         const data = res.data.reviews || [];
         setReviews(data);
@@ -29,7 +30,7 @@ export default function ExpertProfile() {
 
     // ✅ Fetch expert profile
     axios
-      .get(`http://localhost:3000/expert/experts`)
+      .get(`${url}/expert/experts`)
       .then((res) => {
         const found = res.data.find((e) => e._id === expertId);
         setExpert(found);

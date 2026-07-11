@@ -263,7 +263,6 @@ export default function MyBookings() {
 
   return (
     <div className="max-w-5xl mx-auto mt-24 px-4 ">
-    <div className="max-w-5xl mx-auto mt-24 px-4 ">
       <h2 className="text-3xl font-extrabold text-center mb-6">My Bookings</h2>
 
       {/* 🔽 FILTER */}
@@ -281,9 +280,7 @@ export default function MyBookings() {
 
       {/* 🧾 CARDS */}
       <div className="grid gap-5">
-      <div className="grid gap-5">
         {filteredBookings.map((booking) => (
-          
           
           <motion.div
   key={booking._id}
@@ -310,30 +307,6 @@ export default function MyBookings() {
         <h3 className="font-semibold text-gray-800 text-lg">
           {booking.expertName}
         </h3>
-  key={booking._id}
-  initial={{ opacity: 0, y: 20 }}
-  animate={{ opacity: 1, y: 0 }}
-  className="bg-[#f8fafc] border border-gray-200 rounded-2xl p-5 shadow-sm hover:shadow-md transition"
->
-  {/* HEADER */}
-  <div className="flex justify-between items-start">
-    
-    <div className="flex items-center gap-3">
-      {/* Avatar */}
-      <div className="w-12 h-12 rounded-full bg-gray-300 overflow-hidden">
-        <img
-                  src={
-                    `https://ui-avatars.com/api/?name=${booking.expertName}`
-                  }
-                  alt={booking.expertName}
-                  className=" rounded-full mx-auto  object-cover border-2 border-blue-400"
-                />
-        </div>
-
-      <div>
-        <h3 className="font-semibold text-gray-800 text-lg">
-          {booking.expertName}
-        </h3>
 
         <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
           <span className="bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full font-medium">
@@ -363,55 +336,7 @@ export default function MyBookings() {
       {booking.status}
     </span>
   </div>
-        <div className="flex items-center gap-2 text-xs text-gray-500 mt-1">
-          <span className="bg-blue-100 text-blue-600 px-2 py-0.5 rounded-full font-medium">
-            {booking.expertId?.category?.toUpperCase()}
-          </span>
 
-          <span className="flex items-center gap-1">
-            <FiMapPin size={12} />
-            {booking.location}
-          </span>
-        </div>
-      </div>
-    </div>
-
-    {/* STATUS */}
-    <span
-      className={`text-xs px-3 py-1 rounded-full font-medium capitalize ${
-        booking.status === "quoted"
-          ? "bg-orange-100 text-orange-600"
-          : booking.status === "pending"
-          ? "bg-blue-100 text-blue-600"
-          : booking.status === "completed"
-          ? "bg-gray-200 text-gray-600"
-          : "bg-red-100 text-red-500"
-      }`}
-    >
-      {booking.status}
-    </span>
-  </div>
-
-  {/* DATE */}
-  <div className="flex items-center gap-2 text-sm text-gray-500 mt-4">
-      <span className="text-blue-500">
-
-    <FiCalendar size={14}/> </span>
-    {booking.date} • {booking.time}
-  </div>
-
-  {/* CONTENT BLOCK */}
-  <div className="mt-4">
-    {(booking.status === "quoted" || booking.status === "accepted" || booking.status === "completed" )? (
-      <div className="bg-gray-100 border border-gray-200 rounded-xl p-4">
-        <p className="text-xs text-gray-400 mb-2 uppercase font-medium">
-          Quote Summary
-        </p>
-
-        <div className="flex justify-between text-sm text-gray-600">
-          <span>Service Price</span>
-          <span>₹{booking.quoteAmount}</span>
-        </div>
   {/* DATE */}
   <div className="flex items-center gap-2 text-sm text-gray-500 mt-4">
       <span className="text-blue-500">
@@ -504,8 +429,6 @@ export default function MyBookings() {
                   <span
                     key={star}
                     onClick={() => setRating(star)}
-                    className={`cursor-pointer text-2xl ${star <= rating ? "text-yellow-400" : "text-gray-300"
-                      }`}
                     className={`cursor-pointer text-2xl ${star <= rating ? "text-yellow-400" : "text-gray-300"
                       }`}
                   >
@@ -738,7 +661,6 @@ export default function MyBookings() {
           </div>
         )}
       </div>
-    </div>  
     </div>  
   );
 }

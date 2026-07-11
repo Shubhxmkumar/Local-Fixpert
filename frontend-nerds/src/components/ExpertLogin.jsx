@@ -10,7 +10,7 @@ export default function ExpertLoginPage() {
   const [password, setPassword] = useState("");
   const [redirect, setRedirect] = useState(false);
 
-  const { setUser } = useData();
+  const { setUser,url } = useData();
 
   axios.defaults.withCredentials = true;
 
@@ -19,7 +19,7 @@ export default function ExpertLoginPage() {
 
     try {
       const res = await axios.post(
-        "http://localhost:3000/expert/login",
+        `${url}/expert/login`,
         {
           identifier, // ✅ send identifier
           password,

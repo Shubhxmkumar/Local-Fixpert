@@ -1,13 +1,13 @@
 import { motion } from "framer-motion";
 import axios from "axios"
 import { useState, useEffect } from "react";
-
+import { useData } from "../Context/DataContext";
 export default function Testimonials() {
   const [websiteratingList, setWebsiteratingList] = useState([]);
-
+  const { url } = useData();
   useEffect(() => {
     axios
-      .get("http://localhost:3000/review/reviews")
+      .get(`${url}/review/reviews`)
       .then((res) => setWebsiteratingList(res.data))
       .catch((err) => console.error(err));
   }, []);
