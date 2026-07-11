@@ -16,6 +16,7 @@ export const DataProvider = ({ children }) => {
   const [locationforfilter, setlocationforfilter] = useState();
   const [selectedExpert, setSelectedExpert] = useState();
   const [serviceselect, setserviceprovide] = useState();
+  const url = "localhost:3000"
 
   // ✅ Save user changes
   useEffect(() => {
@@ -29,6 +30,7 @@ export const DataProvider = ({ children }) => {
   return (
     <DataContext.Provider
       value={{
+        url,
         data,
         setData,
         selectedExpert,

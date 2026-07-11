@@ -15,14 +15,14 @@ import {
 export default function MyBookings() {
   const [bookings, setBookings] = useState([]);
   const [filter, setFilter] = useState("all");
-  const { user } = useData();
+  const { user,url } = useData();
   const [ratingModal, setRatingModal] = useState(null);
   const [rating, setRating] = useState(0);
   const [review, setReview] = useState("");
   const navigate = useNavigate();
   const [paymentModal, setPaymentModal] = useState(null);
   const [method, setMethod] = useState("card");
-
+ 
   const [card, setCard] = useState({
     number: "",
     name: "",
@@ -38,7 +38,7 @@ export default function MyBookings() {
     if (!user?._id) return;
 
     const res = await axios.get(
-      `http://localhost:3000/bookservice/mybookings/${user._id}`,
+      `${url}/bookservice/mybookings/${user._id}`,
     );
     setBookings(res.data.bookings || []);
   };
@@ -49,13 +49,13 @@ export default function MyBookings() {
 
   // ❌ Cancel
   const cancelBooking = async (id) => {
-    await axios.put(`http://localhost:3000/bookservice/cancel/${id}`);
+    await axios.put(`${url}/bookservice/cancel/${id}`);
     fetchBookings();
   };
 
   // 🔁 Rebook
   const rebook = async (id) => {
-    await axios.post(`http://localhost:3000/bookservice/rebook/${id}`);
+    await axios.post(`${url}/bookservice/rebook/${id}`);
     fetchBookings();
   };
 
@@ -140,14 +140,14 @@ export default function MyBookings() {
   const acceptQuote = async (id) => {
     try {
       // 1️⃣ Accept quote
-      await axios.post(`http://localhost:3000/bookservice/accept/${id}`);
+      await axios.post(`${url}/bookservice/accept/${id}`);
 
       //  (simulate payment gateway)
       await new Promise((resolve) => setTimeout(resolve, 1500));
 
       // 3️⃣ Mark as paid
       await axios.post(
-        "http://localhost:3000/bookservice/verify-payment",
+        `${url}/bookservice/verify-payment`,
         {
           bookingId: id,
           paymentId: "PAY_" + Date.now(),
@@ -164,7 +164,7 @@ export default function MyBookings() {
   };
   const rejectQuote = async (id) => {
     await axios.post(
-      `http://localhost:3000/bookservice/reject/${id}`
+      `${url}/bookservice/reject/${id}`
     );
     fetchBookings();
   };
@@ -457,7 +457,7 @@ export default function MyBookings() {
                 <button
                   onClick={async () => {
                     await axios.post(
-                      `http://localhost:3000/bookservice/rate/${ratingModal._id}`,
+                      `${url}/bookservice/rate/${ratingModal._id}`,
                       { rating, review },
                     );
 
@@ -620,7 +620,7 @@ export default function MyBookings() {
 
                       // 1️⃣ Accept booking
                       await axios.post(
-                        `http://localhost:3000/bookservice/accept/${paymentModal._id}`
+                        `${url}/bookservice/accept/${paymentModal._id}`
                       );
 
                       // 2️⃣ Fake delay
@@ -628,7 +628,7 @@ export default function MyBookings() {
 
                       // 3️⃣ Verify payment
                       await axios.post(
-                        "http://localhost:3000/bookservice/verify-payment",
+                        `${url}/bookservice/verify-payment`,
                         {
                           bookingId: paymentModal._id,
                           paymentId:

@@ -6,7 +6,7 @@ import axios from "axios";
 
 const EditProfile = () => {
     const navigate = useNavigate();
-    const { user, setUser } = useData();
+    const { user, setUser,url} = useData();
 
     const [form, setForm] = useState({
         fullName: "",
@@ -99,7 +99,7 @@ const EditProfile = () => {
             };
 
             const res = await axios.put(
-                `http://localhost:3000/expert/update/${stored._id}`,
+                `${url}/expert/update/${stored._id}`,
                 payload
             );
 

@@ -11,12 +11,12 @@ export default function RegisterPage() {
   const [redirect, setRedirect] = useState(false);
   const [showForm, setShowForm] = useState(false);
 const { setUser } = useData();
-
+const url = useData();
 
   async function registerUser(ev) {
   ev.preventDefault();
   try {
-    const res = await axios.post("http://localhost:3000/register/", {
+    const res = await axios.post(`${url}/register/`, {
       name,
       email,
       password,
