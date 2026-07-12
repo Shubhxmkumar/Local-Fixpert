@@ -26,6 +26,8 @@ app.use(
     origin: [
       "https://5173-cs-216d3b45-f3d8-4c55-a68c-03929d53b127.cs-asia-east1-duck.cloudshell.dev",
       "http://localhost:5173",
+      "https://local-fixpert.onrender.com",
+      "https://5173-cs-781436808749-default.cs-asia-east1-cats.cloudshell.dev/?authuser=2",
     ],
     credentials: true,
   })
